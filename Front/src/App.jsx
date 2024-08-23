@@ -3,7 +3,7 @@ import Header from './components/Header';
 import RestaurantDetail from './components/RestaurantDetail';
 import ReviewList from './components/ReviewList';
 import Sidebar from './components/Sidebar';
-import ReviewForm from './components/ReviewForm';
+import ReviewForm from './components/ReviewFormModal';
 import './App.css';
 
 function App() {
