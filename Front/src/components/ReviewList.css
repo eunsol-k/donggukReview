@@ -76,52 +76,69 @@
   border: 1px solid #ddd;
 }
 
-.review-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.review-recommend {
-  font-size: 14px;
-  color: #007bff;
-  cursor: pointer;
-}
-
 .review-ratings {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;  /* 간격을 줄였습니다 */
   font-size: 14px;
   color: #555;
 }
 
-.review-ratings p {
-  margin: 5px 0;
+.rating-group {
+  margin-bottom: 5px;
 }
 
-.show-more-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+.rating-group p {
+  margin-right: 5px;
+  font-weight: bold;
+  display: inline;
 }
 
-.show-more-button:hover {
-  background-color: #0056b3;
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
 }
 
-.toggle-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+.star-rating.large .star {
+  font-size: 18px;
 }
 
-.toggle-button:hover {
-  background-color: #0056b3;
+.star-rating.medium .star {
+  font-size: 14px;
+}
+
+.star-rating.small .star {
+  font-size: 12px;
+}
+
+.star {
+  color: #ddd;
+}
+
+.star.filled {
+  color: #f5a623;
+}
+
+.star.half-filled {
+  position: relative;
+}
+
+.star.half-filled::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #f5a623;
+}
+
+.small-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;  /* 간격을 줄였습니다 */
+}
+
+.small-ratings > div {
+  display: flex;
+  align-items: center;
 }
