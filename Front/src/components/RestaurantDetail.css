@@ -1,0 +1,81 @@
+.restaurant-detail {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.restaurant-images {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.main-image {
+  width: 100%;  /* 이미지를 중간 섹션 너비에 맞춤 */
+  max-height: 300px;  /* 이미지 최대 높이를 설정 */
+  object-fit: cover;  /* 이미지가 지정된 크기에 맞게 조정되도록 설정 */
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.restaurant-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.restaurant-category {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.restaurant-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating-stars {
+  font-size: 18px;
+  color: #f5a623;
+  margin-right: 10px;
+}
+
+.rating-score {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.review-count {
+  font-size: 14px;
+  color: #666;
+  margin-right: 10px;
+}
+
+.score {
+  font-size: 14px;
+  color: #666;
+}
+
+.restaurant-meta {
+  margin-top: 10px;
+}
+
+.address,
+.phone,
+.features,
+.operating-hours {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
