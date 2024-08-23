@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import RestaurantDetail from './components/RestaurantDetail';
 import ReviewList from './components/ReviewList';
 import Sidebar from './components/Sidebar';
+import ReviewForm from './components/ReviewForm';
 import './App.css';
 
 function App() {
@@ -24,29 +25,47 @@ function App() {
     features: ['무료 Wi-Fi', '반려동물 출입 가능'],
     operatingHours: '09:00 - 22:00',
     image: 'https://via.placeholder.com/400x300',
+    menu: [
+      { name: '아메리카노', price: 4500 },
+      { name: '카페라떼', price: 5000 },
+      { name: '치즈케이크', price: 7000 },
+    ],
   });
 
   const [reviews, setReviews] = useState([
     {
       username: 'User1',
-      rating: 4,
-      content: '맛있어요!',
+      userId: 'user1',
+      profilePicture: 'https://via.placeholder.com/50',  // 프로필 사진 URL
       date: '2023-08-01',
+      content: '맛있어요!',
+      photos: [
+        'https://via.placeholder.com/100',
+        'https://via.placeholder.com/100',
+      ],  // 리뷰 사진 리스트
+      recommendCount: 10,  // 추천수
     },
     {
       username: 'User2',
-      rating: 5,
-      content: '정말 훌륭한 서비스였습니다!',
+      userId: 'user2',
+      profilePicture: null,  // 프로필 사진이 없을 경우
       date: '2023-08-02',
+      content: '정말 훌륭한 서비스였습니다!',
+      photos: [],
+      recommendCount: 5,
     },
   ]);
+
+  const handleReviewSubmit = (newReview) => {
+    setReviews([...reviews, newReview]);
+  };
 
   return (
     <div className="app-container">
       <Header />
       <div className="content">
         <div className="left-section">
-          {/* 왼쪽 섹션을 빈 공간으로 유지 */}
+          {/* 왼쪽 섹션 */}
         </div>
         <div className="middle-section">
           <input
@@ -67,8 +86,10 @@ function App() {
             features={restaurant.features}
             operatingHours={restaurant.operatingHours}
             image={restaurant.image}
+            menu={restaurant.menu}  // 메뉴 정보 전달
           />
           <ReviewList reviews={reviews} />
+          <ReviewForm onSubmit={handleReviewSubmit} />
         </div>
         <div className="right-section">
           <Sidebar

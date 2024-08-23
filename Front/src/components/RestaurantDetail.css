@@ -14,9 +14,9 @@
 }
 
 .main-image {
-  width: 100%;  /* 이미지를 중간 섹션 너비에 맞춤 */
-  max-height: 300px;  /* 이미지 최대 높이를 설정 */
-  object-fit: cover;  /* 이미지가 지정된 크기에 맞게 조정되도록 설정 */
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -45,9 +45,36 @@
 }
 
 .rating-stars {
-  font-size: 18px;
-  color: #f5a623;
+  display: flex;
   margin-right: 10px;
+}
+
+.filled-star,
+.empty-star,
+.half-filled-star {
+  font-size: 18px;
+}
+
+.filled-star {
+  color: #f5a623;
+}
+
+.half-filled-star {
+  color: #f5a623;
+  position: relative;
+}
+
+.half-filled-star::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #f5a623;
+}
+
+.empty-star {
+  color: #ddd;
 }
 
 .rating-score {
@@ -62,20 +89,85 @@
   margin-right: 10px;
 }
 
-.score {
-  font-size: 14px;
-  color: #666;
-}
-
 .restaurant-meta {
   margin-top: 10px;
 }
 
 .address,
-.phone,
-.features,
-.operating-hours {
+.phone {
   font-size: 14px;
   color: #333;
   margin-bottom: 5px;
+}
+
+.restaurant-menu {
+  margin-top: 20px;
+}
+
+.restaurant-menu h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.restaurant-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.restaurant-menu li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-item-name {
+  font-weight: bold;
+}
+
+.menu-item-price {
+  color: #555;
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.favorite-button.active {
+  color: #ff4b4b;
+}
+
+.favorite-button:hover {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .restaurant-detail {
+    padding: 15px;
+  }
+
+  .restaurant-name {
+    font-size: 20px;
+  }
+
+  .main-image {
+    max-height: 200px;
+  }
+
+  .restaurant-menu h2 {
+    font-size: 18px;
+  }
 }

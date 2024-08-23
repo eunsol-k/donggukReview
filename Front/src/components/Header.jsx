@@ -4,7 +4,7 @@ import './Header.css';
 function Header() {
   return (
     <header className="header">
-      <div className="logo">Dongguk Restaurant Nearby</div>
+      <div className="logo">동국대 맛집</div>
       <nav className="nav">
         <a href="/">홈</a>
         <a href="/profile">내 정보</a>
@@ -14,4 +14,3 @@ function Header() {
 }
 
 export default Header;
-

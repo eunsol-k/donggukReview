@@ -1,0 +1,51 @@
+.review-form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.review-form h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.rating-group {
+  margin-bottom: 10px;
+}
+
+.rating-group label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ddd;  /* 비어있는 별 색 */
+  position: relative;
+  display: inline-block;
+}
+
+.star::before {
+  content: '★';
+  color: #f5a623;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.star.filled::before {
+  width: 100%;  /* 채워진 별 */
+}
+
+.star.half-filled::before {
+  width: 50%;  /* 반쪽 채워진 별 */
+}
