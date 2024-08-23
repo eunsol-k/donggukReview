@@ -8,9 +8,14 @@ function ReviewForm({ onSubmit }) {
   const [tasteRating, setTasteRating] = useState(0);
   const [waitingRating, setWaitingRating] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
+  const [images, setImages] = useState([]);
 
-  const handleRatingChange = (ratingSetter, value) => {
-    ratingSetter(value);
+  const handleRatingChange = (ratingSetter, value, currentRating) => {
+    if (currentRating >= value) {
+      ratingSetter(value - 0.5);  // 반개로 변경
+    } else {
+      ratingSetter(value);  // 한 개로 변경
+    }
   };
 
   const renderStars = (rating, ratingSetter) => {
@@ -31,7 +36,8 @@ function ReviewForm({ onSubmit }) {
           onClick={() =>
             handleRatingChange(
               ratingSetter,
-              rating === halfValue ? fullValue : halfValue
+              rating === halfValue ? fullValue : halfValue,
+              rating
             )
           }
         >
@@ -41,8 +47,15 @@ function ReviewForm({ onSubmit }) {
     });
   };
 
+  const handleImageUpload = (e) => {
+    const uploadedImages = Array.from(e.target.files);
+    setImages([...images, ...uploadedImages]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 리뷰 데이터를 객체로 생성
     const review = {
       overallRating,
       serviceRating,
@@ -50,8 +63,28 @@ function ReviewForm({ onSubmit }) {
       tasteRating,
       waitingRating,
       reviewContent,
+      images,  // 업로드된 이미지 포함
     };
-    onSubmit(review);
+
+    // 여기에 백엔드에 데이터를 전송하는 코드 추가
+    // 예: POST 요청을 사용하여 서버로 리뷰 데이터를 전송
+    // fetch('/api/reviews', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(review),
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Review submitted:', data);
+    //   // 성공적으로 제출된 후 추가 작업 (예: 폼 리셋)
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
+
+    onSubmit(review); // 이 부분은 백엔드 연동 시 대체될 수 있음
   };
 
   return (
@@ -88,10 +121,24 @@ function ReviewForm({ onSubmit }) {
         </div>
       </div>
       <div className="review-content">
-        <label>리뷰 내용: </label>
-        <textarea value={reviewContent} onChange={(e) => setReviewContent(e.target.value)} />
+        <textarea
+          placeholder="리뷰를 적어주세요"  // 플레이스홀더 추가
+          value={reviewContent}
+          onChange={(e) => setReviewContent(e.target.value)}
+        />
       </div>
-      <button type="submit">리뷰 등록</button>
+      <div className="image-upload">
+        <label>이미지 업로드: </label>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+        />
+      </div>
+      <div className="submit-button">
+        <button type="submit">리뷰 등록</button>
+      </div>
     </form>
   );
 }
