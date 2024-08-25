@@ -4,7 +4,6 @@ import java.io.File;
 
 import com.donggukReview.donggukReview.entity.Image;
 import com.donggukReview.donggukReview.repository.ImageRepository;
-import com.donggukReview.donggukReview.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,9 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class FileUtils {
 	@Value("${spring.servlet.multipart.location}")
 	private String uploadDir;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private ImageRepository imageRepository;

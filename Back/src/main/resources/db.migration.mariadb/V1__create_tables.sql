@@ -25,7 +25,7 @@ CREATE TABLE users (
                         user_password VARCHAR(255), -- 사용자 비밀번호
                         user_nickname VARCHAR(100), -- 사용자 닉네임
                         user_image_id BIGINT, -- 사용자 프로필 이미지 ID (오타 수정),
-                        user_role
+                        user_role VARCHAR(100),
                         PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 

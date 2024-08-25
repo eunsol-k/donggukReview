@@ -67,7 +67,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		Users userEntity = userRepository.findByUserId(subject);
 		
-		
 		if(userEntity == null || !jwtUtils.validateToken(jwtToken, userEntity)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().write("Invalid JWT token");
