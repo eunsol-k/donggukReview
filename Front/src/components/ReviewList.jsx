@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ReviewList.css';
 
-function ReviewList({ reviews }) {
+function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
   const [visibleCount, setVisibleCount] = useState(3);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -49,6 +49,11 @@ function ReviewList({ reviews }) {
               <span className="review-username">{review.username}</span>
               <span className="review-userid">({review.userId})</span>
             </div>
+            {isAdmin && isDeleteMode && (
+              <button onClick={() => onDelete(review.userId)} className="delete-button">
+                삭제
+              </button>
+            )}
           </div>
           <p className="review-date">{review.date}</p>
           <p className="review-content">{review.content}</p>

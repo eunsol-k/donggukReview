@@ -1,0 +1,32 @@
+.restaurant-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.restaurant-edit-form label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.restaurant-edit-form input {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.restaurant-edit-form button {
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.restaurant-edit-form button:hover {
+  background-color: #0056b3;
+}
