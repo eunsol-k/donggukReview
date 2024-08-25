@@ -7,6 +7,7 @@ import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class MembershipController {
 	@DeleteMapping("/withdraw")
 	public ResponseEntity<?> register(@AuthUser Users userEntity, @RequestBody WithdrawRequestDTO requestDto) {
 		if (userEntity == null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
 		if (!requestDto.checkPassword() || !encoder.matches(requestDto.getUserPassword(), userEntity.getUserPassword())) {
