@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UsersRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<Users, Long> {
     Users findByUserId(String userId);
     List<Users> findByUserRole(String role);
+    boolean existsByUserId(String userId);
 }

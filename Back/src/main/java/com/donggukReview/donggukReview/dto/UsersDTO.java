@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UsersDTO {
     private Long id;
-    private String usersId;
-    private String usersNickname;
-    private Long usersImageId;
+    private String userId;
+    private String userPassword;
+    private String userNickname;
+    private Long userImageId;
+    private String userRole;
 }

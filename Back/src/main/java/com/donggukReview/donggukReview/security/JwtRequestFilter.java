@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.donggukReview.donggukReview.common.JwtUtils;
 import com.donggukReview.donggukReview.entity.Users;
-import com.donggukReview.donggukReview.repository.UsersRepository;
+import com.donggukReview.donggukReview.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtUtils jwtUtils;
 
 	@Autowired
-	private UsersRepository usersRepository;
+	private UserRepository userRepository;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -65,7 +65,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			return;
 		}
 		
-		Users userEntity = usersRepository.findByUserId(subject);
+		Users userEntity = userRepository.findByUserId(subject);
 		
 		
 		if(userEntity == null || !jwtUtils.validateToken(jwtToken, userEntity)) {

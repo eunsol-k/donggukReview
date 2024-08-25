@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.donggukReview.donggukReview.entity.Users;
-import com.donggukReview.donggukReview.repository.UsersRepository;
+import com.donggukReview.donggukReview.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +30,7 @@ public class JwtUtils {
 	private long expirationTime;
 
 	@Autowired
-	private UsersRepository usersRepository;
+	private UserRepository userRepository;
 
 	public JwtUtils(@Value("${jwt.secret}") String secretKey,
 					@Value("${jwt.expiration-time}") long accessTokenExpTime) {
@@ -108,7 +108,7 @@ public class JwtUtils {
 
 	public Users getUser(String token) {
 		String userId = getSubjectFromToken(token);
-		Users user = usersRepository.findByUserId(userId);
+		Users user = userRepository.findByUserId(userId);
 
         return user;
 	}

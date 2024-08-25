@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.donggukReview.donggukReview.common.JwtUtils;
 import com.donggukReview.donggukReview.entity.Users;
-import com.donggukReview.donggukReview.repository.UsersRepository;
+import com.donggukReview.donggukReview.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
-	private UsersRepository usersRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	private JwtUtils jwtUtils;
@@ -29,12 +29,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		Users userEntity = usersRepository.findByUserId(userDetails.getUsername());
+		Users userEntity = userRepository.findByUserId(userDetails.getUsername());
 
 		String jwtToken = jwtUtils.createAccessToken(userEntity);
 
 		// 응답 헤더에 생성한 토큰을 설정
 		response.setHeader("token", jwtToken); // JWT 값
-		response.setHeader("username", userEntity.getUserId()); // Users: userId(사용자 ID) 값
+		response.setHeader("username", userEntity.getUserId()); // Users: userId (사용자 계정 ID) 값
 	}
 }
