@@ -1,10 +1,8 @@
 package com.donggukReview.donggukReview.controller;
 
 import com.donggukReview.donggukReview.dto.CafeteriaDTO;
-import com.donggukReview.donggukReview.dto.LikesDTO;
 import com.donggukReview.donggukReview.service.CafeteriaService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
