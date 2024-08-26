@@ -5,8 +5,8 @@ function Sidebar({ username, userId, likedStores, averageRating, isAdmin, onEdit
   return (
     <aside className="sidebar">
       <div className="profile-section">
-        <div className="profile-pic">
-          <img src="https://via.placeholder.com/60" alt="User" className="profile-img" />
+        <div className="sidebar-profile-pic">
+          <img src="https://via.placeholder.com/60" alt="User" className="sidebar-profile-img" />
         </div>
         <div className="profile-info">
           <p className="username">{username}</p>

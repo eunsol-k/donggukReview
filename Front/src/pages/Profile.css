@@ -1,35 +1,52 @@
-.mypage-container {
+.profile-page {
   padding: 20px;
-  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
 }
 
-.profile-section {
+.profile-header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .profile-img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-right: 20px;
+  object-fit: cover; /* 이미지가 원형을 유지하며 꽉 차게 설정 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 이미지에 약간의 그림자 추가 */
 }
 
-.profile-info {
-  flex-grow: 1;
+.profile-info h2 {
+  margin: 0;
+  font-size: 24px;
 }
 
-.activity-section {
-  margin-top: 20px;
+.profile-info p {
+  margin: 5px 0 0;
+  color: #666;
 }
 
-.activity-section ul {
-  list-style: none;
+.profile-section {
+  margin-bottom: 20px;
+}
+
+.profile-section h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.profile-section ul {
+  list-style-type: none;
   padding: 0;
 }
 
-.activity-section li {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
+.profile-section li {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
