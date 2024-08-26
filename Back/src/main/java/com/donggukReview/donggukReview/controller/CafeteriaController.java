@@ -26,8 +26,22 @@ public class CafeteriaController {
         return ResponseEntity.ok(cafeteria);
     }
     @GetMapping
-    public ResponseEntity<List<CafeteriaDTO>> getAllCafeterias() {
-        List<CafeteriaDTO> cafeterias = cafeteriaService.getAllCafeterias();
+    public ResponseEntity<List<CafeteriaDTO>> getAllCafeterias(
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "category", required = false) String category) {
+
+        List<CafeteriaDTO> cafeterias;
+
+        if (search != null && !search.isEmpty() && category != null && !category.isEmpty()) {
+            cafeterias = cafeteriaService.getCafeteriasByNameAndCategory(search, category);
+        } else if (search != null && !search.isEmpty()) {
+            cafeterias = cafeteriaService.getCafeteriasByName(search);
+        } else if (category != null && !category.isEmpty()) {
+            cafeterias = cafeteriaService.getCafeteriasByCategory(category);
+        } else {
+            cafeterias = cafeteriaService.getAllCafeterias();
+        }
+
         return ResponseEntity.ok(cafeterias);
     }
     @PatchMapping("/cafeteria/{id}")

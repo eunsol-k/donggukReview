@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -39,6 +40,30 @@ public class CafeteriaServiceImpl implements CafeteriaService {
     public List<CafeteriaDTO> getAllCafeterias() {
         List<Cafeteria> cafeterias = cafeteriaRepository.findAll();
         return cafeterias.stream().map(CafeteriaMapper :: mapToCafeteriaDto).toList();
+    }
+
+    @Override
+    public List<CafeteriaDTO> getCafeteriasByName(String name) {
+        return cafeteriaRepository.findByCafeteriaNameContainingIgnoreCase(name)
+                .stream()
+                .map(CafeteriaMapper::mapToCafeteriaDto)
+                .toList();
+    }
+
+    @Override
+    public List<CafeteriaDTO> getCafeteriasByCategory(String category) {
+        return cafeteriaRepository.findByCafeteriaCategoryContainingIgnoreCase(category)
+                .stream()
+                .map(CafeteriaMapper::mapToCafeteriaDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CafeteriaDTO> getCafeteriasByNameAndCategory(String name, String category) {
+        return cafeteriaRepository.findByCafeteriaNameContainingIgnoreCaseAndCafeteriaCategoryContainingIgnoreCase(name, category)
+                .stream()
+                .map(CafeteriaMapper::mapToCafeteriaDto)
+                .collect(Collectors.toList());
     }
 
     @Override
