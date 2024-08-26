@@ -18,6 +18,7 @@
   width: 20%; /* 왼쪽 섹션 너비 */
   background-color: #f0f0f0;
   padding: 20px;
+  border-right: 1px solid #ddd;
 }
 
 .middle-section {
@@ -28,7 +29,7 @@
 .right-section {
   width: 20%; /* 오른쪽 섹션 너비 */
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f0f0f0;
   border-left: 1px solid #ddd;
 }
 

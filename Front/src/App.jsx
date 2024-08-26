@@ -131,20 +131,34 @@ function App() {
             </Routes>
           </div>
           <div className="right-section">
-            <Sidebar
-              username={userInfo.username}
-              userId={userInfo.userId}
-              likedStores={5}
-              averageRating={4.3}
-              isAdmin={isAdmin}
-              isEditingRestaurant={isEditingRestaurant}
-              isDeleteMode={isDeleteMode}
-              onEditRestaurant={handleEditRestaurant}
-              onDeleteReviews={handleDeleteReviews}
-            />
-            <button onClick={toggleAdminMode} className="toggle-admin-button">
-              {isAdmin ? '일반 모드로 전환' : '관리자 모드로 전환'}
-            </button>
+            {/* Profile 페이지가 아닌 경우에만 Sidebar를 렌더링 */}
+            <Routes>
+              <Route
+                path="/profile"
+                element={null} // Profile 페이지에서는 Sidebar를 숨김
+              />
+              <Route
+                path="*"
+                element={
+                  <>
+                    <Sidebar
+                      username={userInfo.username}
+                      userId={userInfo.userId}
+                      likedStores={5}
+                      averageRating={4.3}
+                      isAdmin={isAdmin}
+                      isEditingRestaurant={isEditingRestaurant}
+                      isDeleteMode={isDeleteMode}
+                      onEditRestaurant={handleEditRestaurant}
+                      onDeleteReviews={handleDeleteReviews}
+                    />
+                    <button onClick={toggleAdminMode} className="toggle-admin-button">
+                      {isAdmin ? '일반 모드로 전환' : '관리자 모드로 전환'}
+                    </button>
+                  </>
+                }
+              />
+            </Routes>
           </div>
         </div>
       </div>
