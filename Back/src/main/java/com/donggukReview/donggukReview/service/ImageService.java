@@ -49,5 +49,4 @@ public class ImageService {
     public Optional<Image> getCafeteriaImgByCafeteriaId(Long cafeteriaId) {
         return imageRepository.findByCreatorIdAndIsUserImage(cafeteriaId, false);
     }
-
 }
