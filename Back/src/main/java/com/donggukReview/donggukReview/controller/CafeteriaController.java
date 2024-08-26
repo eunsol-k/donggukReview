@@ -11,16 +11,16 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/cafeteria")
+@RequestMapping("/")
 public class CafeteriaController {
 
     private CafeteriaService cafeteriaService;
-    @PostMapping
+    @PostMapping("/cafeteria")
     public ResponseEntity<CafeteriaDTO> createCafeteria(@RequestBody CafeteriaDTO cafeteriaDTO) {
         CafeteriaDTO cafeteria = cafeteriaService.createCafeteria(cafeteriaDTO);
         return new ResponseEntity<>(cafeteria, HttpStatus.CREATED);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/cafeteria/{id}")
     public ResponseEntity<CafeteriaDTO> getCafeteriaById(@PathVariable("id") Long cafeteriaId) {
         CafeteriaDTO cafeteria = cafeteriaService.getCafeteriaById(cafeteriaId);
         return ResponseEntity.ok(cafeteria);
@@ -30,12 +30,12 @@ public class CafeteriaController {
         List<CafeteriaDTO> cafeterias = cafeteriaService.getAllCafeterias();
         return ResponseEntity.ok(cafeterias);
     }
-    @PatchMapping("/{id}")
+    @PatchMapping("/cafeteria/{id}")
     public ResponseEntity<CafeteriaDTO> patchCafeteria(@PathVariable("id") Long cafeteriaId, @RequestBody CafeteriaDTO cafeteriaDTO) {
         CafeteriaDTO cafeteria = cafeteriaService.patchCafeteria(cafeteriaId, cafeteriaDTO);
         return ResponseEntity.ok(cafeteria);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/cafeteria/{id}")
     public ResponseEntity<String> deleteCafeteria(@PathVariable("id") Long cafeteriaId) {
         cafeteriaService.deleteCafeteria(cafeteriaId);
         String okMsg = String.format("%s deleted successfully", cafeteriaId);
