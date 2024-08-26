@@ -1,6 +1,7 @@
 package com.donggukReview.donggukReview.common;
 
 import java.io.File;
+import java.util.Optional;
 
 import com.donggukReview.donggukReview.entity.Image;
 import com.donggukReview.donggukReview.repository.ImageRepository;
@@ -31,9 +32,9 @@ public class FileUtils {
 		Image imageEntity = new Image();
 
 		// 해당 creatorId에 해당하는 Image Entity 존재하는지 확인
-		Image storedImageEntity = imageRepository.findByCreatorId(creatorId);
-		if (storedImageEntity != null) {
-			imageEntity = storedImageEntity;
+		Optional<Image> storedImageOptional = imageRepository.findByCreatorId(creatorId);
+		if (storedImageOptional.isPresent()) {
+			imageEntity = storedImageOptional.get();
 		}
 
 		String storedDirSort = "";

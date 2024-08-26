@@ -1,18 +1,17 @@
 package com.donggukReview.donggukReview.service;
 
+import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.dto.UserInfoResponseDTO;
-import com.donggukReview.donggukReview.entity.Image;
-import com.donggukReview.donggukReview.entity.Likes;
-import com.donggukReview.donggukReview.entity.Review;
-import com.donggukReview.donggukReview.entity.Users;
-import com.donggukReview.donggukReview.repository.LikeRepository;
-import com.donggukReview.donggukReview.repository.ReviewRepository;
+import com.donggukReview.donggukReview.dto.UserLikeListResponseDTO;
+import com.donggukReview.donggukReview.dto.UserLikeResponseDTO;
+import com.donggukReview.donggukReview.entity.*;
 import com.donggukReview.donggukReview.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +22,16 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private LikeRepository likeRepository;
+    private LikeService likeService;
 
     @Autowired
     private ReviewService reviewService;
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private CafeteriaService cafeteriaService;
 
     // 회원 가입
     public long register(Users userEntity, MultipartFile file) {
@@ -49,15 +51,11 @@ public class UserService {
 
     public UserInfoResponseDTO getUserInfo(Users users) {
         Optional<Image> userImage = imageService.getImageById(users.getUserImageId());
-        List<Likes> likesList = likeRepository.findByUserId(users.getId());
+        List<Likes> likesList = likeService.getLikeList(users.getId());
         List<Review> reviewList = reviewService.getAllReviewByUserId(users.getId());
 
         String userImagePath = "";
-        if (userImage.isPresent()) {
-            userImagePath = userImage.get().getStoredFilePath();
-        } else {
-            userImagePath = null;
-        }
+        userImagePath = userImage.map(Image::getStoredFilePath).orElse(null);
 
         UserInfoResponseDTO responseDTO = new UserInfoResponseDTO();
         responseDTO.setUserId(users.getUserId());
@@ -69,6 +67,33 @@ public class UserService {
         return responseDTO;
     }
 
+    public UserLikeListResponseDTO getUserLikeList(Users users) {
+        UserLikeListResponseDTO responseDTO = new UserLikeListResponseDTO();
+
+        List<Likes> likeList = likeService.getLikeList(users.getId());
+        List<UserLikeResponseDTO> responseDTOList = new ArrayList<>();
+
+        for (Likes like : likeList) {
+            Long cafeteriaId = like.getCafeteriaId();
+            CafeteriaDTO cafeteriaDTO = cafeteriaService.getCafeteriaById(cafeteriaId);
+            Optional<Image> cafeteriaImageOptional = imageService.getCafeteriaImgByCafeteriaId(cafeteriaId);
+
+            String cafeteriaImagePath = "";
+            cafeteriaImagePath = cafeteriaImageOptional.map(Image::getStoredFilePath).orElse(null);
+
+            UserLikeResponseDTO userLikeResponseDTO = new UserLikeResponseDTO();
+            userLikeResponseDTO.setCafeteriaId(cafeteriaId);
+            userLikeResponseDTO.setCafeteriaName(cafeteriaDTO.getCafeteriaName());
+            userLikeResponseDTO.setCafeteriaCategory(cafeteriaDTO.getCafeteriaCategory());
+            userLikeResponseDTO.setCafeteriaImagePath(cafeteriaImagePath);
+
+            responseDTOList.add(userLikeResponseDTO);
+        }
+
+        responseDTO.setUserLikeList(responseDTOList);
+        return responseDTO;
+    }
+
     public void deleteUser(long id) {
         userRepository.deleteById(id);
     };
@@ -76,8 +101,4 @@ public class UserService {
     public boolean existsByUserId(String userId) {
         return userRepository.existsByUserId(userId);
     };
-
-    public List<Likes> getLikesByUserId(long userId) {
-        return likeRepository.findByUserId(userId);
-    }
 }

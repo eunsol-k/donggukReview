@@ -74,4 +74,9 @@ public class CafeteriaServiceImpl implements CafeteriaService {
                 .orElseThrow(() -> new ResourceNotFoundException(errMsg, HttpStatus.NOT_FOUND));
         cafeteriaRepository.delete(cafeteria);
     }
+
+    @Override
+    public boolean isExistsCafeteria(Long cafeteriaId) {
+        return cafeteriaRepository.existsById(cafeteriaId);
+    }
 }

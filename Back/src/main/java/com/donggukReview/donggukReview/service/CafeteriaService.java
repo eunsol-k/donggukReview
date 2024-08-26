@@ -10,5 +10,5 @@ public interface CafeteriaService {
     List<CafeteriaDTO> getAllCafeterias();
     CafeteriaDTO patchCafeteria(Long cafeteriaId, CafeteriaDTO cafeteriaDTO);
     void deleteCafeteria(Long cafeteriaId);
-
+    boolean isExistsCafeteria(Long cafeteriaId);
 }
