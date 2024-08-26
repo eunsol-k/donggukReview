@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class ReviewResponseDTO {
     private String reviewContents;
     private String reviewRatingsTotal;
-    private Long reviewRecommended;
+    private Integer reviewRecommended;
 }
