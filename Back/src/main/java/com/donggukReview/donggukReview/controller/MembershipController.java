@@ -1,7 +1,7 @@
 package com.donggukReview.donggukReview.controller;
 
 import com.donggukReview.donggukReview.common.AuthUser;
-import com.donggukReview.donggukReview.dto.RegisterRequestDto;
+import com.donggukReview.donggukReview.dto.RegisterRequestDTO;
 import com.donggukReview.donggukReview.dto.WithdrawRequestDTO;
 import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.UserService;
@@ -27,7 +27,7 @@ public class MembershipController {
 
 	@PostMapping("/register")
 	public ResponseEntity<?> register(
-			@RequestPart(value = "data") RegisterRequestDto requestDto,
+			@RequestPart(value = "data") RegisterRequestDTO requestDto,
 			@RequestPart(value = "file", required = false) MultipartFile file
 	) {
 		if (userService.existsByUserId(requestDto.getUserId())) {
