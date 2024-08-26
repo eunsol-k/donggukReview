@@ -19,16 +19,32 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  margin-right: 20px;
+  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
+  margin-right: 15px; /* 이미지와 텍스트 사이에 간격 추가 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0; /* 이미지가 없는 경우 배경색 */
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 이미지가 잘리지 않고 컨테이너 안에 맞게 표시 */
+  border-radius: 50%; /* 이미지가 컨테이너의 모양에 맞도록 설정 */
 }
 
 .profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 텍스트가 수직으로 가운데 정렬되도록 설정 */
   text-align: left;
 }
 
 .username {
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 5px; /* 이름과 ID 사이의 간격 추가 */
 }
 
 .user-id {
@@ -68,4 +84,3 @@
 .admin-actions button:hover {
   background-color: #0056b3;
 }
-
