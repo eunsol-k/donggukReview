@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class ImageService {
@@ -32,5 +34,19 @@ public class ImageService {
         } else {
             return -1;
         }
+    }
+
+    public Optional<Image> getImageById(Long id) {
+        return imageRepository.findById(id);
+    }
+
+    // Image Entity 불러오기: 사용자 프로필 이미지
+    public Optional<Image> getProfileByUserId(Long userId) {
+        return imageRepository.findByCreatorIdAndIsUserImage(userId, true);
+    }
+
+    // Image Entity 불러오기: 음식점 대표 이미지
+    public Optional<Image> getCafeteriaImgByCafeteriaId(Long cafeteriaId) {
+        return imageRepository.findByCreatorIdAndIsUserImage(cafeteriaId, false);
     }
 }

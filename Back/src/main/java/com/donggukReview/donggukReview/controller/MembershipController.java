@@ -1,7 +1,7 @@
 package com.donggukReview.donggukReview.controller;
 
 import com.donggukReview.donggukReview.common.AuthUser;
-import com.donggukReview.donggukReview.dto.EntityDTO.RegisterRequestDto;
+import com.donggukReview.donggukReview.dto.RegisterRequestDto;
 import com.donggukReview.donggukReview.dto.WithdrawRequestDTO;
 import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.UserService;

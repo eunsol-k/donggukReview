@@ -19,7 +19,7 @@ public class Likes {
     private Long id;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "cafeteria_id")
     private Long cafeteriaId;

@@ -1,4 +1,4 @@
-package com.donggukReview.donggukReview.dto.EntityDTO;
+package com.donggukReview.donggukReview.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
