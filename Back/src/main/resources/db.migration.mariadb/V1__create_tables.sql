@@ -14,7 +14,7 @@ CREATE TABLE cafeteria (
                            cafeteria_category VARCHAR(100), -- 음식점 카테고리
                            cafeteria_phone VARCHAR(100), -- 음식점 전화번호
                            cafeteria_address VARCHAR(255), -- 음식점 주소
-                           cafeteria_image_id BIGINT, -- 음식점 대표 이미지 ID
+                           cafeteria_image_id varchar(1000), -- 음식점 대표 이미지 ID
                            PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 

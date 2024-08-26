@@ -1,15 +1,13 @@
 package com.donggukReview.donggukReview.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 @Table(name = "cafeteria")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

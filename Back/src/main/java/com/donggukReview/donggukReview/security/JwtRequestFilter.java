@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// 헤더 검증 생략 API 목록
 		String uri = request.getRequestURI();
-		if (uri.equals("/") || uri.equals("/main") ||
+		if (uri.equals("/") ||
 			uri.equals("/register") || uri.equals("/login") ||
 			uri.equals("/categories") ||
 			uri.startsWith("/swagger") || uri.startsWith("/docs") ||
