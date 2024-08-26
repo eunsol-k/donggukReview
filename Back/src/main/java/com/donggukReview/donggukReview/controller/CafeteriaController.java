@@ -29,7 +29,7 @@ public class CafeteriaController {
     }
     @GetMapping("/cafeteria/{id}")
     public ResponseEntity<CafeteriaDetailResponseDTO> getCafeteriaById(@AuthUser Users users, @PathVariable("id") Long cafeteriaId) {
-        CafeteriaDetailResponseDTO cafeteria = cafeteriaService.getCafeteriaById(users, cafeteriaId);
+        CafeteriaDetailResponseDTO cafeteria = cafeteriaService.getCafeteriaDetailById(users, cafeteriaId);
         return ResponseEntity.ok(cafeteria);
     }
     @GetMapping

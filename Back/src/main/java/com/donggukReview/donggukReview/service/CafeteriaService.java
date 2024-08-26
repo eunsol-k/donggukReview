@@ -4,6 +4,7 @@ import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.entity.Users;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
 public interface CafeteriaService {
     CafeteriaDTO createCafeteria(CafeteriaDTO cafeteriaDTO, MultipartFile file);
 
-    CafeteriaDetailResponseDTO getCafeteriaById(Users users, Long cafeteriaId);
+    CafeteriaDetailResponseDTO getCafeteriaDetailById(Users users, Long cafeteriaId);
+
     List<CafeteriaResponseDTO> getAllCafeterias();
     List<CafeteriaResponseDTO> getCafeteriasByName(String name);
     List<CafeteriaResponseDTO> getCafeteriasByCategory(String category);
@@ -19,4 +21,6 @@ public interface CafeteriaService {
     CafeteriaDTO patchCafeteria(Long cafeteriaId, CafeteriaDTO cafeteriaDTO, MultipartFile file);
     void deleteCafeteria(Long cafeteriaId);
     boolean isExistsCafeteria(Long cafeteriaId);
+
+    CafeteriaResponseDTO getCafeteriaById(Long cafeteriaId);
 }

@@ -63,7 +63,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
 
     @Override
     @Transactional(readOnly = true)
-    public CafeteriaDetailResponseDTO getCafeteriaById(Users users, Long cafeteriaId) {
+    public CafeteriaDetailResponseDTO getCafeteriaDetailById(Users users, Long cafeteriaId) {
         // 예외 메시지 정의
         String errMsg = String.format("Data does not exist for ID %s", cafeteriaId);
 
@@ -96,9 +96,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
                     reviewResponseDTO.setReviewRatingsTotal(review.getReviewRatingsTotal());
                     reviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
                     return reviewResponseDTO;
-                })
-                .collect(Collectors.toList());
-
+                }).toList();
 
         // CafeteriaDetailResponseDTO 생성 및 설정
         CafeteriaDetailResponseDTO cafeteriaDetailResponseDTO = new CafeteriaDetailResponseDTO();
@@ -279,5 +277,34 @@ public class CafeteriaServiceImpl implements CafeteriaService {
     @Override
     public boolean isExistsCafeteria(Long cafeteriaId) {
         return cafeteriaRepository.existsById(cafeteriaId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CafeteriaResponseDTO getCafeteriaById(Long cafeteriaId) {
+        // 예외 메시지 정의
+        String errMsg = String.format("Data is not exists %s", cafeteriaId);
+
+        // 식당 정보를 DB에서 조회
+        Cafeteria cafeteria = cafeteriaRepository.findById(cafeteriaId)
+                .orElseThrow(() -> new ResourceNotFoundException(errMsg, HttpStatus.NOT_FOUND));
+
+        // 식당 이미지 정보를 가져옴
+        Optional<Image> imageOptional = imageService.getCafeteriaImgByCafeteriaId(cafeteriaId);
+
+        CafeteriaResponseDTO cafeteriaResponseDTO = new CafeteriaResponseDTO();
+
+        cafeteriaResponseDTO.setCafeteriaId(cafeteria.getId());
+        cafeteriaResponseDTO.setCafeteriaName(cafeteria.getCafeteriaName());
+        cafeteriaResponseDTO.setCafeteriaCategory(cafeteria.getCafeteriaCategory());
+        cafeteriaResponseDTO.setCafeteriaPhone(cafeteria.getCafeteriaPhone());
+        cafeteriaResponseDTO.setCafeteriaAddress(cafeteria.getCafeteriaAddress());
+
+        // Optional을 통해 이미지 정보가 존재할 경우 설정
+        imageOptional.ifPresent(image -> {
+            cafeteriaResponseDTO.setStoredFilePath(image.getStoredFilePath());
+        });
+
+        return cafeteriaResponseDTO;
     }
 }
