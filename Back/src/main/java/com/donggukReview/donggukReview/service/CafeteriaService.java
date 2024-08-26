@@ -1,18 +1,21 @@
 package com.donggukReview.donggukReview.service;
 
-import com.donggukReview.donggukReview.dto.CafeteriaDTO;
-import org.springframework.stereotype.Service;
+import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
+import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CafeteriaService {
-    CafeteriaDTO createCafeteria(CafeteriaDTO cafeteriaDTO);
-    CafeteriaDTO getCafeteriaById(Long cafeteriaId);
-    List<CafeteriaDTO> getAllCafeterias();
-    List<CafeteriaDTO> getCafeteriasByName(String name);
-    List<CafeteriaDTO> getCafeteriasByCategory(String category);
-    List<CafeteriaDTO> getCafeteriasByNameAndCategory(String name, String category);
-    CafeteriaDTO patchCafeteria(Long cafeteriaId, CafeteriaDTO cafeteriaDTO);
+    CafeteriaDTO createCafeteria(CafeteriaDTO cafeteriaDTO, MultipartFile file);
+
+    CafeteriaResponseDTO getCafeteriaById(Long cafeteriaId);
+    List<CafeteriaResponseDTO> getAllCafeterias();
+    List<CafeteriaResponseDTO> getCafeteriasByName(String name);
+    List<CafeteriaResponseDTO> getCafeteriasByCategory(String category);
+    List<CafeteriaResponseDTO> getCafeteriasByNameAndCategory(String name, String category);
+    CafeteriaDTO patchCafeteria(Long cafeteriaId, CafeteriaDTO cafeteriaDTO, MultipartFile file);
     void deleteCafeteria(Long cafeteriaId);
 
 }

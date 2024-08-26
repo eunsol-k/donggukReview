@@ -39,7 +39,7 @@ public class Review {
     private Long reviewRecommended;
 
     @Column(name = "user_id", unique = true, nullable = false)
-    private String userId;
+    private Long userId;
 
     @Column(name = "cafeteria_id")
     private Long cafeteriaId;

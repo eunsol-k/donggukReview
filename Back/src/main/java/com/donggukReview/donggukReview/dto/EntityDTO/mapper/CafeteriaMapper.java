@@ -1,6 +1,6 @@
-package com.donggukReview.donggukReview.dto.mapper;
+package com.donggukReview.donggukReview.dto.EntityDTO.mapper;
 
-import com.donggukReview.donggukReview.dto.CafeteriaDTO;
+import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.entity.Cafeteria;
 
 public class CafeteriaMapper {

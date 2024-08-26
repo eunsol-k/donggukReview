@@ -1,4 +1,4 @@
-package com.donggukReview.donggukReview.dto;
+package com.donggukReview.donggukReview.dto.EntityDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewDTO {
     private Long id;
-    private Long usersId;
+    private Long userId;
     private Long cafeteriaId;
     private String reviewContents;
     private String reviewRatingsService;

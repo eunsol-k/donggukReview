@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
 				(auth) -> auth
-						.requestMatchers("/", "/main",
+						.requestMatchers("/",
 						"/login", "/register",
 						"/swagger/**", "/swagger-ui/**", "/docs/**",
 						"/categories", "/cafeteria/**")
