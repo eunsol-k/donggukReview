@@ -46,8 +46,7 @@ function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
               )}
             </div>
             <div className="review-author">
-              <span className="review-username">{review.username}</span>
-              <span className="review-userid">({review.userId})</span>
+              <span className="review-userid">{review.userId}</span>
             </div>
             {isAdmin && isDeleteMode && (
               <button onClick={() => onDelete(review.userId)} className="delete-button">
@@ -81,10 +80,6 @@ function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
               <div>
                 <p>음식 맛:</p>
                 {renderStars(review.tasteRating, 'small')}
-              </div>
-              <div>
-                <p>웨이팅:</p>
-                {renderStars(review.waitingRating, 'small')}
               </div>
             </div>
           </div>

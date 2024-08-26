@@ -66,19 +66,6 @@
   resize: vertical;
 }
 
-.image-upload {
-  margin-bottom: 20px;
-}
-
-.image-upload label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.image-upload input {
-  display: block;
-}
-
 .submit-button {
   display: flex;
   justify-content: flex-end;

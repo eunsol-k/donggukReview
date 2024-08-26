@@ -6,9 +6,7 @@ function ReviewForm({ onSubmit }) {
   const [serviceRating, setServiceRating] = useState(0);
   const [priceRating, setPriceRating] = useState(0);
   const [tasteRating, setTasteRating] = useState(0);
-  const [waitingRating, setWaitingRating] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
-  const [images, setImages] = useState([]);
 
   const handleRatingChange = (ratingSetter, value, currentRating) => {
     if (currentRating >= value) {
@@ -61,9 +59,7 @@ function ReviewForm({ onSubmit }) {
       serviceRating,
       priceRating,
       tasteRating,
-      waitingRating,
       reviewContent,
-      images,  // 업로드된 이미지 포함
     };
 
     // 여기에 백엔드에 데이터를 전송하는 코드 추가
@@ -114,26 +110,11 @@ function ReviewForm({ onSubmit }) {
           {renderStars(tasteRating, setTasteRating)}
         </div>
       </div>
-      <div className="rating-group">
-        <label>웨이팅: </label>
-        <div className="star-rating">
-          {renderStars(waitingRating, setWaitingRating)}
-        </div>
-      </div>
       <div className="review-content">
         <textarea
           placeholder="리뷰를 적어주세요"  // 플레이스홀더 추가
           value={reviewContent}
           onChange={(e) => setReviewContent(e.target.value)}
-        />
-      </div>
-      <div className="image-upload">
-        <label>이미지 업로드: </label>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
         />
       </div>
       <div className="submit-button">

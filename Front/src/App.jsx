@@ -4,7 +4,7 @@ import RestaurantDetail from './components/RestaurantDetail';
 import ReviewList from './components/ReviewList';
 import Sidebar from './components/Sidebar';
 import RestaurantEditForm from './components/RestaurantEditForm';
-import ReviewForm from './components/ReviewForm'; // 리뷰 작성 폼 임포트
+import ReviewForm from './components/ReviewFormModal'; // 리뷰 작성 폼 임포트
 import './App.css';
 
 function App() {
@@ -44,7 +44,6 @@ function App() {
       serviceRating: 4,
       priceRating: 5,
       tasteRating: 4.5,
-      waitingRating: 4,
     },
     {
       username: 'User2',
@@ -57,7 +56,6 @@ function App() {
       serviceRating: 4,
       priceRating: 3.5,
       tasteRating: 4,
-      waitingRating: 3.5,
     },
   ]);
 
@@ -79,7 +77,12 @@ function App() {
   };
 
   const handleReviewSubmit = (newReview) => {
-    setReviews([...reviews, newReview]);
+    const reviewWithUserInfo = {
+      ...newReview,
+      userId: userInfo.userId,
+      date: new Date().toISOString().split('T')[0],
+    };
+    setReviews([...reviews, reviewWithUserInfo]);
   };
 
   const toggleAdminMode = () => {
@@ -90,6 +93,11 @@ function App() {
     <div className="app-container">
       <Header />
       <div className="content">
+        {/* 왼쪽 섹션 추가 */}
+        <div className="left-section">
+          {/* 이 부분에 필요한 내용을 추가할 수 있습니다 */}
+          <p>Left Section</p>
+        </div>
         <div className="middle-section">
           <input
             type="text"
@@ -113,14 +121,8 @@ function App() {
               onSave={handleRestaurantSave}
             />
           )}
-          <ReviewList
-            reviews={reviews}
-            isAdmin={isAdmin}
-            isDeleteMode={isDeleteMode}
-            onDelete={handleDeleteReview}
-          />
-          {/* 리뷰 작성 폼 추가 */}
           {!isAdmin && <ReviewForm onSubmit={handleReviewSubmit} />}
+          <ReviewList reviews={reviews} isAdmin={isAdmin} isDeleteMode={isDeleteMode} onDelete={handleDeleteReview} />
         </div>
         <div className="right-section">
           <Sidebar

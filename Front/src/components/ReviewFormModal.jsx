@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReviewForm from './ReviewForm';
 import './ReviewFormModal.css';
 
-function ReviewFormModal() {
+function ReviewFormModal({ onSubmit }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -15,6 +15,7 @@ function ReviewFormModal() {
 
   const handleReviewSubmit = (review) => {
     // 리뷰를 제출했을 때 모달을 닫고 나머지 로직 처리
+    onSubmit(review)
     closeModal();
     console.log('Review submitted:', review);
     // 나중에 백엔드에 리뷰 데이터를 전송하는 로직을 추가
