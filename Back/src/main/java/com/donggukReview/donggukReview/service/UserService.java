@@ -1,10 +1,7 @@
 package com.donggukReview.donggukReview.service;
 
+import com.donggukReview.donggukReview.dto.*;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
-import com.donggukReview.donggukReview.dto.UserInfoResponseDTO;
-import com.donggukReview.donggukReview.dto.UserInfoUpdateRequestDTO;
-import com.donggukReview.donggukReview.dto.UserLikeListResponseDTO;
-import com.donggukReview.donggukReview.dto.UserLikeResponseDTO;
 import com.donggukReview.donggukReview.entity.*;
 import com.donggukReview.donggukReview.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +94,7 @@ public class UserService {
 
         for (Likes like : likeList) {
             Long cafeteriaId = like.getCafeteriaId();
-            CafeteriaDTO cafeteriaDTO = cafeteriaService.getCafeteriaById(cafeteriaId);
+            CafeteriaResponseDTO cafeteriaDTO = cafeteriaService.getCafeteriaById(cafeteriaId);
             Optional<Image> cafeteriaImageOptional = imageService.getCafeteriaImgByCafeteriaId(cafeteriaId);
 
             String cafeteriaImagePath = "";
