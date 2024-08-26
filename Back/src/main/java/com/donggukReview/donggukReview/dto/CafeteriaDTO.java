@@ -17,5 +17,5 @@ public class CafeteriaDTO {
     private String cafeteriaCategory;
     private String cafeteriaPhone;
     private String cafeteriaAddress;
-    private String cafeteriaImageId;
+    private Long cafeteriaImageId;
 }

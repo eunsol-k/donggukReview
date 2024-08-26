@@ -31,5 +31,5 @@ public class Cafeteria {
     private String cafeteriaAddress;
 
     @Column(name = "cafeteria_image_id")
-    private String cafeteriaImageId;
+    private Long cafeteriaImageId;
 }

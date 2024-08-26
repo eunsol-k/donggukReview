@@ -27,15 +27,15 @@ public class CafeteriaController {
     }
     @GetMapping
     public ResponseEntity<List<CafeteriaDTO>> getAllCafeterias(
-            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "category", required = false) String category) {
 
         List<CafeteriaDTO> cafeterias;
 
-        if (search != null && !search.isEmpty() && category != null && !category.isEmpty()) {
-            cafeterias = cafeteriaService.getCafeteriasByNameAndCategory(search, category);
-        } else if (search != null && !search.isEmpty()) {
-            cafeterias = cafeteriaService.getCafeteriasByName(search);
+        if (name != null && !name.isEmpty() && category != null && !category.isEmpty()) {
+            cafeterias = cafeteriaService.getCafeteriasByNameAndCategory(name, category);
+        } else if (name != null && !name.isEmpty()) {
+            cafeterias = cafeteriaService.getCafeteriasByName(name);
         } else if (category != null && !category.isEmpty()) {
             cafeterias = cafeteriaService.getCafeteriasByCategory(category);
         } else {
@@ -54,6 +54,12 @@ public class CafeteriaController {
         cafeteriaService.deleteCafeteria(cafeteriaId);
         String okMsg = String.format("%s deleted successfully", cafeteriaId);
         return ResponseEntity.ok(okMsg);
+    }
+
+    @PostMapping("/cafeteria/{id}/like")
+    public ResponseEntity<String> createLike(@PathVariable("id") Long cafeteriaId) {
+        cafeteriaService.createLike(cafeteriaId);
+
     }
 
 }
