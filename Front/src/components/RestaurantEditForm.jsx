@@ -5,6 +5,8 @@ function RestaurantEditForm({ restaurant, onSave }) {
     name: '',
     phone: '',
     address: '',
+    category: [],
+    menu: [],
   });
 
   const handleChange = (e) => {
@@ -12,6 +14,36 @@ function RestaurantEditForm({ restaurant, onSave }) {
     setUpdatedRestaurant((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  // 기존 메뉴 항목을 수정하는 핸들러
+  const handleMenuChange = (index, field, value) => {
+    const updatedMenu = [...updatedRestaurant.menu];
+    updatedMenu[index] = {
+      ...updatedMenu[index],
+      [field]: value,
+    };
+    setUpdatedRestaurant((prev) => ({
+      ...prev,
+      menu: updatedMenu,
+    }));
+  };
+
+  // 새로운 메뉴 항목을 추가하는 핸들러
+  const handleAddMenu = () => {
+    setUpdatedRestaurant((prev) => ({
+      ...prev,
+      menu: [...prev.menu, { name: '', price: '' }],
+    }));
+  };
+
+  // 메뉴 항목을 삭제하는 핸들러
+  const handleDeleteMenu = (index) => {
+    const updatedMenu = updatedRestaurant.menu.filter((_, i) => i !== index);
+    setUpdatedRestaurant((prev) => ({
+      ...prev,
+      menu: updatedMenu,
     }));
   };
 
@@ -68,33 +100,31 @@ function RestaurantEditForm({ restaurant, onSave }) {
       <div>
         <label>메뉴:</label>
         {updatedRestaurant.menu?.map((item, index) => (
-          <div key={index}>
+          <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
             <input
               type="text"
               name={`menu-name-${index}`}
+              placeholder="메뉴 이름"
               value={item.name}
-              onChange={(e) =>
-                setUpdatedRestaurant((prev) => {
-                  const newMenu = [...prev.menu];
-                  newMenu[index].name = e.target.value;
-                  return { ...prev, menu: newMenu };
-                })
-              }
+              onChange={(e) => handleMenuChange(index, 'name', e.target.value)}
             />
             <input
               type="text"
               name={`menu-price-${index}`}
+              placeholder="가격"
               value={item.price}
-              onChange={(e) =>
-                setUpdatedRestaurant((prev) => {
-                  const newMenu = [...prev.menu];
-                  newMenu[index].price = e.target.value;
-                  return { ...prev, menu: newMenu };
-                })
-              }
+              onChange={(e) => handleMenuChange(index, 'price', e.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => handleDeleteMenu(index)}
+              style={{ marginLeft: '10px' }}
+            >
+              삭제
+            </button>
           </div>
         ))}
+        <button onClick={handleAddMenu}>메뉴 추가</button> {/* 메뉴 추가 버튼 */}
       </div>
       <button onClick={handleSave}>저장</button>
     </div>
