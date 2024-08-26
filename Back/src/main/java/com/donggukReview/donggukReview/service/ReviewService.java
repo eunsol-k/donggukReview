@@ -49,6 +49,8 @@ public class ReviewService {
 
     // 리뷰 작성
     public Review addReview(Review review) {
+        Review savedReview = reviewRepository.save(review);
+
         if (!ratingsRepository.existsByCafeteriaId(review.getCafeteriaId())) {
             Ratings ratings = new Ratings();
 
@@ -61,8 +63,16 @@ public class ReviewService {
             ratingsRepository.save(ratings);
         } else {
             List<Review> cafeteriaReviewList = reviewRepository.findByCafeteriaId(review.getCafeteriaId());
-            // TODO 평점 평균 계산
-            int totalReviews = cafeteriaReviewList.size();
+
+            // TODO 평점 평균 계산 (작성 중)
+
+            double serviceSum = 0.0;
+            double priceSum = 0.0;
+            double flavorSum = 0.0;
+            double totalSum = 0.0;
+            for (Review cafeteriaReview : cafeteriaReviewList) {
+
+            }
 
             Ratings ratings = ratingsRepository.findByCafeteriaId(review.getCafeteriaId());
 
@@ -75,7 +85,7 @@ public class ReviewService {
             ratingsRepository.save(ratings);
         }
 
-        return reviewRepository.save(review);
+        return savedReview;
     }
 
     public List<Review> getAllReviewByUserId(long userId) {
