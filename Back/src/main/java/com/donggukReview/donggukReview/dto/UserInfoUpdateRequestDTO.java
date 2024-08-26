@@ -4,13 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserLikeListResponseDTO {
-    int total;
-    List<UserLikeResponseDTO> userLikeList;
+public class UserInfoUpdateRequestDTO {
+    private String userNickname;
+    private String userPrevNickname;
+    private String userNextPassword;
 }
-

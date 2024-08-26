@@ -9,8 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserLikeListResponseDTO {
+public class UserReviewListResponseDTO {
     int total;
-    List<UserLikeResponseDTO> userLikeList;
+    List<UserReviewResponseDTO> userReviewList;
 }
-

@@ -34,7 +34,7 @@ public class Review {
     private String reviewRatingsTotal;
 
     @Column(name = "review_recommended")
-    private Long reviewRecommended;
+    private Integer reviewRecommended;
 
     @Column(name = "user_id")
     private Long userId;

@@ -60,7 +60,7 @@ CREATE TABLE review (
                         review_ratings_price VARCHAR(5), -- 가격 별점
                         review_ratings_flavor VARCHAR(5), -- 맛 별점
                         review_ratings_total VARCHAR(5), -- 평균 별점
-                        review_recommended BIGINT, -- 추천 수
+                        review_recommended INTEGER, -- 추천 수
                         PRIMARY KEY (id),
 ) ENGINE=InnoDB;
 
