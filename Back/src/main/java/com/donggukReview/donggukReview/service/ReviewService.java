@@ -1,5 +1,6 @@
 package com.donggukReview.donggukReview.service;
 
+import com.donggukReview.donggukReview.dto.EntityDTO.ReviewDTO;
 import com.donggukReview.donggukReview.dto.UserReviewListResponseDTO;
 import com.donggukReview.donggukReview.dto.UserReviewResponseDTO;
 import com.donggukReview.donggukReview.entity.Ratings;
@@ -33,9 +34,9 @@ public class ReviewService {
 
             userReviewResponseDTO.setReviewId(review.getId());
             userReviewResponseDTO.setReviewContents(review.getReviewContents());
-            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
-            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
-            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
+//            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
+//            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
+//            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
             userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatingsTotal());
             userReviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
             userReviewResponseDTO.setCafeteriaId(review.getCafeteriaId());
@@ -54,9 +55,9 @@ public class ReviewService {
         if (!ratingsRepository.existsByCafeteriaId(review.getCafeteriaId())) {
             Ratings ratings = new Ratings();
 
-            ratings.setRatingsService(review.getReviewRatingsService());
-            ratings.setRatingsPrice(review.getReviewRatingsPrice());
-            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
+//            ratings.setRatingsService(review.getReviewRatingsService());
+//            ratings.setRatingsPrice(review.getReviewRatingsPrice());
+//            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
             ratings.setRatingsTotal(review.getReviewRatingsTotal());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
@@ -76,9 +77,9 @@ public class ReviewService {
 
             Ratings ratings = ratingsRepository.findByCafeteriaId(review.getCafeteriaId());
 
-            ratings.setRatingsService(review.getReviewRatingsService());
-            ratings.setRatingsPrice(review.getReviewRatingsPrice());
-            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
+//            ratings.setRatingsService(review.getReviewRatingsService());
+//            ratings.setRatingsPrice(review.getReviewRatingsPrice());
+//            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
             ratings.setRatingsTotal(review.getReviewRatingsTotal());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
@@ -90,5 +91,8 @@ public class ReviewService {
 
     public List<Review> getAllReviewByUserId(long userId) {
         return reviewRepository.findByUserId(userId);
+    }
+    public List<Review> getReviewByCafeteriaId(long cafeteriaId) {
+        return reviewRepository.findByCafeteriaId(cafeteriaId);
     }
 }

@@ -21,14 +21,14 @@ public class Review {
     @Column(name = "review_contents")
     private String reviewContents;
 
-    @Column(name = "review_ratings_service")
-    private String reviewRatingsService;
-
-    @Column(name = "review_ratings_price")
-    private String reviewRatingsPrice;
-
-    @Column(name = "review_ratings_flavor")
-    private String reviewRatingsFlavor;
+//    @Column(name = "review_ratings_service")
+//    private String reviewRatingsService;
+//
+//    @Column(name = "review_ratings_price")
+//    private String reviewRatingsPrice;
+//
+//    @Column(name = "review_ratings_flavor")
+//    private String reviewRatingsFlavor;
 
     @Column(name = "review_ratings_total")
     private String reviewRatingsTotal;

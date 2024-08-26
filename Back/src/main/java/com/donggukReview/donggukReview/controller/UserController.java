@@ -149,9 +149,9 @@ public class UserController {
 
         Review review = new Review();
         review.setReviewContents(requestDto.getReviewContents());
-        review.setReviewRatingsService(requestDto.getReviewRatingsService());
-        review.setReviewRatingsPrice(requestDto.getReviewRatingsPrice());
-        review.setReviewRatingsFlavor(requestDto.getReviewRatingsFlavor());
+//        review.setReviewRatingsService(requestDto.getReviewRatingsService());
+//        review.setReviewRatingsPrice(requestDto.getReviewRatingsPrice());
+//        review.setReviewRatingsFlavor(requestDto.getReviewRatingsFlavor());
         review.setReviewRatingsTotal(requestDto.getReviewRatingsTotal());
         review.setReviewRecommended(requestDto.getReviewRecommended());
         review.setUserId(users.getId());

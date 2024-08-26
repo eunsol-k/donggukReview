@@ -20,15 +20,6 @@ public class Ratings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ratings_service")
-    private String ratingsService;
-
-    @Column(name = "ratings_price")
-    private String ratingsPrice;
-
-    @Column(name = "ratings_flavor")
-    private String ratingsFlavor;
-
     @Column(name = "ratings_total")
     private String ratingsTotal;
 

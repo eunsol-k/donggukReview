@@ -5,14 +5,21 @@ import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.ImageDTO;
+import com.donggukReview.donggukReview.dto.EntityDTO.RatingsDTO;
+import com.donggukReview.donggukReview.dto.EntityDTO.ReviewDTO;
+import com.donggukReview.donggukReview.entity.Ratings;
+import com.donggukReview.donggukReview.entity.Review;
 import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.CafeteriaService;
+import com.donggukReview.donggukReview.service.RatingsService;
+import com.donggukReview.donggukReview.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +29,8 @@ import java.util.Optional;
 public class CafeteriaController {
 
     private CafeteriaService cafeteriaService;
+    private RatingsService ratingsService;
+    private ReviewService reviewService;
     @PostMapping("/cafeteria")
     public ResponseEntity<CafeteriaDTO> createCafeteria(@RequestBody CafeteriaDTO cafeteriaDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
         CafeteriaDTO cafeteria = cafeteriaService.createCafeteria(cafeteriaDTO, file);
@@ -63,10 +72,26 @@ public class CafeteriaController {
         return ResponseEntity.ok(okMsg);
     }
 
-//    @PostMapping("/cafeteria/{id}/like")
-//    public ResponseEntity<String> createLike(@PathVariable("id") Long cafeteriaId) {
-//        cafeteriaService.createLike(cafeteriaId);
-//
-//    }
+    @GetMapping("/cafeteria/ratings/{id}")
+    public ResponseEntity<RatingsDTO> getRatingsById(@PathVariable("id") Long cafeteriaId) {
+        RatingsDTO ratings = ratingsService.getRatingsById(cafeteriaId);
+        return  ResponseEntity.ok(ratings);
+    }
 
+    @GetMapping("/cafeteria/reviews/{id}")
+    public ResponseEntity<List<ReviewDTO>> getReviewById(@PathVariable("id") Long cafeteriaId) {
+        List<Review> reviews = reviewService.getReviewByCafeteriaId(cafeteriaId);
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        for(Review review : reviews) {
+            ReviewDTO reviewDTO = new ReviewDTO();
+            reviewDTO.setId(review.getId());
+            reviewDTO.setCafeteriaId(review.getCafeteriaId());
+            reviewDTO.setReviewRecommended(review.getReviewRecommended());
+            reviewDTO.setReviewContents(review.getReviewContents());
+            reviewDTO.setCafeteriaId(review.getCafeteriaId());
+
+            reviewDTOList.add(reviewDTO);
+        }
+        return  ResponseEntity.ok(reviewDTOList);
+    }
 }

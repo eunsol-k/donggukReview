@@ -12,8 +12,5 @@ import lombok.NoArgsConstructor;
 public class RatingsDTO {
     private Long id;
     private Long cafeteriaId;
-    private String ratingsService;
-    private String ratingsPrice;
-    private String ratingsFlavor;
     private String ratingsTotal;
 }
