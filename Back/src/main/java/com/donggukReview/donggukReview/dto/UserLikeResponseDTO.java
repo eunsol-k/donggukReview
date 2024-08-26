@@ -1,15 +1,15 @@
 package com.donggukReview.donggukReview.dto;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-public class CafeteriaResponseDTO {
+public class UserLikeResponseDTO {
     private Long cafeteriaId;
     private String cafeteriaName;
     private String cafeteriaCategory;
-    private String cafeteriaPhone;
-    private String cafeteriaAddress;
-    private String storedFilePath;
+    private String cafeteriaImagePath;
 }

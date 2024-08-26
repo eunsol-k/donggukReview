@@ -33,7 +33,10 @@ public class FileUtils {
 
 		// 해당 creatorId에 해당하는 Image Entity 존재하는지 확인
 		Optional<Image> storedImageOptional = imageRepository.findByCreatorId(creatorId);
-		if (storedImageOptional.isPresent()) { imageEntity = storedImageOptional.get(); }
+
+		if (storedImageOptional.isPresent()) {
+			imageEntity = storedImageOptional.get();
+		}
 
 		String storedDirSort = "";
 		if (isUserImage) {

@@ -1,8 +1,11 @@
 package com.donggukReview.donggukReview.controller;
 
+import com.donggukReview.donggukReview.common.AuthUser;
+import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.ImageDTO;
+import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.CafeteriaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,8 +28,8 @@ public class CafeteriaController {
         return new ResponseEntity<>(cafeteria, HttpStatus.CREATED);
     }
     @GetMapping("/cafeteria/{id}")
-    public ResponseEntity<CafeteriaResponseDTO> getCafeteriaById(@PathVariable("id") Long cafeteriaId) {
-        CafeteriaResponseDTO cafeteria = cafeteriaService.getCafeteriaById(cafeteriaId);
+    public ResponseEntity<CafeteriaDetailResponseDTO> getCafeteriaById(@AuthUser Users users, @PathVariable("id") Long cafeteriaId) {
+        CafeteriaDetailResponseDTO cafeteria = cafeteriaService.getCafeteriaById(users, cafeteriaId);
         return ResponseEntity.ok(cafeteria);
     }
     @GetMapping

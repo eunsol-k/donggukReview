@@ -1,15 +1,13 @@
 package com.donggukReview.donggukReview.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 @Table(name = "review")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +36,7 @@ public class Review {
     @Column(name = "review_recommended")
     private Long reviewRecommended;
 
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "cafeteria_id")
