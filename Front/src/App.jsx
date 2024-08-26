@@ -96,7 +96,7 @@ function App() {
         <Header />
         <div className="content">
           <div className="left-section">
-            <p>Left Section</p>
+{/*             <p>Left Section</p> */}
           </div>
           <div className="middle-section">
             <Routes>
