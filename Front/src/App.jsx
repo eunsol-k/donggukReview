@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import RestaurantDetail from './components/RestaurantDetail';
-import ReviewList from './components/ReviewList';
 import Sidebar from './components/Sidebar';
+import Home from './pages/Home';
+import Detail from './pages/Detail';
+import Profile from './pages/Profile';
 import RestaurantEditForm from './components/RestaurantEditForm';
-import ReviewForm from './components/ReviewFormModal'; // 리뷰 작성 폼 임포트
 import './App.css';
 
 function App() {
-  const [isEditingRestaurant, setIsEditingRestaurant] = useState(false);
+  const [isEditingRestaurant, setIsEditingRestaurant] = useState(false); // 수정 모드 상태
   const [isAdmin, setIsAdmin] = useState(true); // 관리자 여부
-  const [isDeleteMode, setIsDeleteMode] = useState(false); // 삭제 모드 상태 추가
+  const [isDeleteMode, setIsDeleteMode] = useState(false); // 삭제 모드 상태
 
   const userInfo = isAdmin
     ? { username: '관리자', userId: 'admin123' }
@@ -60,20 +61,20 @@ function App() {
   ]);
 
   const handleEditRestaurant = () => {
-    setIsEditingRestaurant(!isEditingRestaurant);
+    setIsEditingRestaurant(!isEditingRestaurant); // 수정 모드 전환
   };
 
   const handleRestaurantSave = (updatedRestaurant) => {
-    setRestaurant(updatedRestaurant);
-    setIsEditingRestaurant(false);
+    setRestaurant(updatedRestaurant); // 수정된 음식점 정보로 상태 업데이트
+    setIsEditingRestaurant(false); // 수정 모드 종료
   };
 
   const handleDeleteReview = (userId) => {
-    setReviews(reviews.filter((review) => review.userId !== userId));
+    setReviews(reviews.filter((review) => review.userId !== userId)); // 리뷰 삭제
   };
 
   const handleDeleteReviews = () => {
-    setIsDeleteMode(!isDeleteMode);
+    setIsDeleteMode(!isDeleteMode); // 삭제 모드 전환
   };
 
   const handleReviewSubmit = (newReview) => {
@@ -82,66 +83,72 @@ function App() {
       userId: userInfo.userId,
       date: new Date().toISOString().split('T')[0],
     };
-    setReviews([...reviews, reviewWithUserInfo]);
+    setReviews([...reviews, reviewWithUserInfo]); // 새로운 리뷰 추가
   };
 
   const toggleAdminMode = () => {
-    setIsAdmin(!isAdmin);
+    setIsAdmin(!isAdmin); // 관리자 모드 전환
   };
 
   return (
-    <div className="app-container">
-      <Header />
-      <div className="content">
-        {/* 왼쪽 섹션 추가 */}
-        <div className="left-section">
-          {/* 이 부분에 필요한 내용을 추가할 수 있습니다 */}
-          <p>Left Section</p>
-        </div>
-        <div className="middle-section">
-          <input
-            type="text"
-            placeholder="음식점 이름을 검색하세요..."
-            className="search-bar"
-          />
-          {!isEditingRestaurant ? (
-            <RestaurantDetail
-              name={restaurant.name}
-              category={restaurant.category}
-              rating={restaurant.rating}
-              reviewCount={restaurant.reviewCount}
-              address={restaurant.address}
-              phone={restaurant.phone}
-              image={restaurant.image}
-              menu={restaurant.menu}
+    <Router>
+      <div className="app-container">
+        <Header />
+        <div className="content">
+          <div className="left-section">
+            <p>Left Section</p>
+          </div>
+          <div className="middle-section">
+            <Routes>
+              <Route
+                path="/"
+                element={<Home />}
+              />
+              <Route
+                path="/details"
+                element={
+                  isEditingRestaurant ? (
+                    <RestaurantEditForm
+                      restaurant={restaurant}
+                      onSave={handleRestaurantSave}
+                    />
+                  ) : (
+                    <Detail
+                      restaurant={restaurant}
+                      reviews={reviews}
+                      isAdmin={isAdmin}
+                      isDeleteMode={isDeleteMode}
+                      onDelete={handleDeleteReview}
+                      onSubmitReview={handleReviewSubmit}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/profile"
+                element={<Profile />}
+              />
+            </Routes>
+          </div>
+          <div className="right-section">
+            <Sidebar
+              username={userInfo.username}
+              userId={userInfo.userId}
+              likedStores={5}
+              averageRating={4.3}
+              isAdmin={isAdmin}
+              isEditingRestaurant={isEditingRestaurant}
+              isDeleteMode={isDeleteMode}
+              onEditRestaurant={handleEditRestaurant}
+              onDeleteReviews={handleDeleteReviews}
             />
-          ) : (
-            <RestaurantEditForm
-              restaurant={restaurant}
-              onSave={handleRestaurantSave}
-            />
-          )}
-          {!isAdmin && <ReviewForm onSubmit={handleReviewSubmit} />}
-          <ReviewList reviews={reviews} isAdmin={isAdmin} isDeleteMode={isDeleteMode} onDelete={handleDeleteReview} />
-        </div>
-        <div className="right-section">
-          <Sidebar
-            username={userInfo.username}
-            userId={userInfo.userId}
-            likedStores={5}
-            averageRating={4.3}
-            isAdmin={isAdmin}
-            isEditingRestaurant={isEditingRestaurant}
-            isDeleteMode={isDeleteMode}
-            onEditRestaurant={handleEditRestaurant}
-            onDeleteReviews={handleDeleteReviews}
-          />
-          <button onClick={toggleAdminMode} className="toggle-admin-button">
-            {isAdmin ? '일반 모드로 전환' : '관리자 모드로 전환'}
-          </button>
+            <button onClick={toggleAdminMode} className="toggle-admin-button">
+              {isAdmin ? '일반 모드로 전환' : '관리자 모드로 전환'}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
