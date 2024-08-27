@@ -4,46 +4,41 @@
   flex-direction: column;
 }
 
-.profile-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.profile-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-right: 20px;
-  object-fit: cover; /* 이미지가 원형을 유지하며 꽉 차게 설정 */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 이미지에 약간의 그림자 추가 */
-}
-
-.profile-info h2 {
-  margin: 0;
-  font-size: 24px;
-}
-
-.profile-info p {
-  margin: 5px 0 0;
-  color: #666;
-}
-
 .profile-section {
   margin-bottom: 20px;
 }
 
-.profile-section h3 {
+/* 좋아요 한 음식점 섹션 스타일 */
+.liked-restaurants-section h3 {
   margin-bottom: 10px;
   font-size: 20px;
 }
 
-.profile-section ul {
+.liked-restaurants-section ul {
   list-style-type: none;
   padding: 0;
 }
 
-.profile-section li {
+.liked-restaurants-section li {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 작성한 댓글 섹션 스타일 */
+.reviews-section h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.reviews-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.reviews-section li {
   background-color: #f8f8f8;
   padding: 10px;
   border-radius: 8px;

@@ -3,6 +3,7 @@ import './ProfileEditModal.css';
 
 function ProfileEditModal({ userInfo, onClose }) {
   const [profileData, setProfileData] = useState(userInfo);
+  const [previewImage, setPreviewImage] = useState(userInfo.profilePicture || '');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -10,6 +11,21 @@ function ProfileEditModal({ userInfo, onClose }) {
       ...profileData,
       [name]: value,
     });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileData({
+          ...profileData,
+          profilePicture: reader.result,
+        });
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = () => {
@@ -43,16 +59,21 @@ function ProfileEditModal({ userInfo, onClose }) {
         </div>
         <div className="form-group">
           <label>프로필 사진:</label>
+          <div className="profile-preview-container">
+            {previewImage && <img src={previewImage} alt="Profile Preview" className="profile-preview" />}
+          </div>
           <input
-            type="text"
+            type="file"
             name="profilePicture"
-            value={profileData.profilePicture}
-            onChange={handleChange}
+            accept="image/*"
+            onChange={handleImageChange}
           />
         </div>
-        <button className="save-button" onClick={handleSubmit}>
-          저장
-        </button>
+        <div className="save-button-container">
+          <button className="save-button" onClick={handleSubmit}>
+            저장
+          </button>
+        </div>
       </div>
     </div>
   );

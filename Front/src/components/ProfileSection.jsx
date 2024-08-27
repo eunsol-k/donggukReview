@@ -12,7 +12,7 @@ function ProfileSection({ userInfo }) {
     <div className="profile-section">
       <div className="profile-info">
         <img src={userInfo.profilePicture} alt="프로필 사진" className="profile-img" />
-        <div>
+        <div className="profile-text">
           <h2>{userInfo.username}</h2>
           <p>ID: {userInfo.userId}</p>
         </div>
