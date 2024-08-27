@@ -16,7 +16,7 @@ public class LikeService {
     private LikeRepository likeRepository;
 
     public List<Likes> getLikeList(long userId) {
-        return likeRepository.findByUserId(userId);
+        return likeRepository.findByUserIdOrderByIdDesc(userId);
     }
 
     public void checkLike(Users users, long cafeteriaId) {

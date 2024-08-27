@@ -1,6 +1,9 @@
 package com.donggukReview.donggukReview.common;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import com.donggukReview.donggukReview.entity.Image;
@@ -35,6 +38,11 @@ public class FileUtils {
 		Optional<Image> storedImageOptional = imageRepository.findByCreatorId(creatorId);
 
 		if (storedImageOptional.isPresent()) {
+			// 이전 이미지 삭제
+			Path filePath  = Paths.get(storedImageOptional.get().getStoredFilePath());
+			Files.deleteIfExists(filePath);
+
+			// 이미 존재하는 Image Entity 불러오기
 			imageEntity = storedImageOptional.get();
 		}
 

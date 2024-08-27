@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -331,7 +330,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
         List<String> categoryList = cafeteriaList.stream()
                 .map(Cafeteria::getCafeteriaCategory) // Cafeteria 엔터티에서 카테고리 필드만 추출
                 .distinct() // 중복된 카테고리를 제거
-                .collect(Collectors.toList()); // 결과를 리스트로 수집
+                .toList(); // 결과를 리스트로 수집
 
         // CategoryResponseDTO에 카테고리 리스트를 설정
         CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();

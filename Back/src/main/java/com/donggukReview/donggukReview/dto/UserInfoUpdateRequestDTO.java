@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserInfoUpdateRequestDTO {
     private String userNickname;
-    private String userPrevNickname;
+    private String userPrevPassword;
     private String userNextPassword;
 }
