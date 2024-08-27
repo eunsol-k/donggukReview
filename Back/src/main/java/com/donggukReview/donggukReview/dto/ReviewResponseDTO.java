@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewResponseDTO {
     private String reviewContents;
-    private String reviewRatingsTotal;
+    private String reviewRatings;
     private Integer reviewRecommended;
 }

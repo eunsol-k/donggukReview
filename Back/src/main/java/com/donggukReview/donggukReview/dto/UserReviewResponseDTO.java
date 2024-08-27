@@ -10,10 +10,7 @@ import lombok.Setter;
 public class UserReviewResponseDTO {
     private Long reviewId;
     private String reviewContents;
-    private String reviewRatingsService;
-    private String reviewRatingsPrice;
-    private String reviewRatingsFlavor;
-    private String reviewRatingsTotal;
+    private String reviewRatings;
     private Integer reviewRecommended;
     private Long cafeteriaId;
 }

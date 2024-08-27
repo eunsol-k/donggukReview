@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class UserLikeListResponseDTO {
-    int total;
+    int count;
     List<UserLikeResponseDTO> userLikeList;
 }
 

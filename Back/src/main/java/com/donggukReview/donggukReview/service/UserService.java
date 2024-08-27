@@ -108,7 +108,7 @@ public class UserService {
 
             responseDTOList.add(userLikeResponseDTO);
         }
-        responseDTO.setTotal(responseDTOList.size());
+        responseDTO.setCount(responseDTOList.size());
         responseDTO.setUserLikeList(responseDTOList);
         return responseDTO;
     }

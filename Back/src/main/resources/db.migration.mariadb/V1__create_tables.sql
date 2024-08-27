@@ -43,10 +43,7 @@ CREATE TABLE menu (
 CREATE TABLE ratings (
                          id BIGINT NOT NULL AUTO_INCREMENT, -- ID (Primary Key)
                          cafeteria_id BIGINT, -- 음식점 ID
-                         ratings_service VARCHAR(5), -- 서비스 평균 별점
-                         ratings_price VARCHAR(5), -- 가격 평균 별점
-                         ratings_flavor VARCHAR(5), -- 맛 평균 별점
-                         ratings_total VARCHAR(5), -- 전체 평균 별점
+                         ratings VARCHAR(5), -- 전체 평균 별점
                          PRIMARY KEY (id),
 ) ENGINE=InnoDB;
 
@@ -56,10 +53,7 @@ CREATE TABLE review (
                         user_id BIGINT, -- 리뷰 작성자 ID
                         cafeteria_id BIGINT, -- 리뷰 대상 음식점 ID
                         review_contents VARCHAR(1000), -- 리뷰 내용
-                        review_ratings_service VARCHAR(5), -- 서비스 별점
-                        review_ratings_price VARCHAR(5), -- 가격 별점
-                        review_ratings_flavor VARCHAR(5), -- 맛 별점
-                        review_ratings_total VARCHAR(5), -- 평균 별점
+                        review_ratings VARCHAR(5), -- 리뷰 별점
                         review_recommended INTEGER, -- 추천 수
                         PRIMARY KEY (id),
 ) ENGINE=InnoDB;

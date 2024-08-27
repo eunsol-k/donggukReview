@@ -15,7 +15,7 @@ public class RatingsService {
 
         RatingsDTO ratingsDTO = new RatingsDTO();
         ratingsDTO.setId(ratings.getId());
-        ratingsDTO.setRatingsTotal(ratings.getRatingsTotal());
+        ratingsDTO.setRatings(ratings.getRatings());
         ratingsDTO.setCafeteriaId(ratings.getCafeteriaId());
 
         return ratingsDTO;

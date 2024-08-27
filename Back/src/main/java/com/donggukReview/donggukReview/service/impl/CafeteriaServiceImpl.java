@@ -93,7 +93,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
                 .map(review -> {
                     ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
                     reviewResponseDTO.setReviewContents(review.getReviewContents());
-                    reviewResponseDTO.setReviewRatingsTotal(review.getReviewRatingsTotal());
+                    reviewResponseDTO.setReviewRatings(review.getReviewRatings());
                     reviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
                     return reviewResponseDTO;
                 }).toList();
