@@ -1,54 +1,54 @@
 .review-form {
-  margin-top: 20px;
+  background-color: #ffffff;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 .review-form h2 {
   margin-bottom: 20px;
   font-size: 20px;
+  color: #333;
 }
 
 .rating-group {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .rating-group label {
-  margin-right: 10px;
   font-weight: bold;
+  font-size: 16px;
+  color: #555;
 }
 
 .star-rating {
   display: inline-flex;
-  gap: 5px;  /* 별 사이 간격을 추가하여 밀집도를 줄임 */
-  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
 }
 
 .star {
-  font-size: 20px;  /* 별 크기를 줄여서 세련된 느낌을 줌 */
+  font-size: 20px;
+  color: #ddd;
   cursor: pointer;
-  color: #ddd;  /* 비어있는 별 색 */
+}
+
+.star.filled {
+  color: #f5a623;
+}
+
+.star.half-filled {
   position: relative;
 }
 
-.star::before {
+.star.half-filled::before {
   content: '★';
-  color: #f5a623;
   position: absolute;
   left: 0;
-  top: 0;
-  width: 0;
-  overflow: hidden;
-}
-
-.star.filled::before {
-  width: 100%;
-}
-
-.star.half-filled::before {
   width: 50%;
+  overflow: hidden;
+  color: #f5a623;
 }
 
 .review-content {
@@ -61,9 +61,9 @@
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 8px;
   resize: vertical;
+  color: #333;
 }
 
 .submit-button {
@@ -74,13 +74,15 @@
 button[type="submit"] {
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
+  color: #ffffff;
+  background-color: #6e8efb;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #a777e3;
+  transform: translateY(-2px);
 }

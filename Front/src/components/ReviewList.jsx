@@ -2,8 +2,19 @@ import React, { useState } from 'react';
 import './ReviewList.css';
 
 function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
+  const [sortCriteria, setSortCriteria] = useState('latest'); // 정렬 기준 상태
   const [visibleCount, setVisibleCount] = useState(3);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // 리뷰 정렬 함수
+  const sortedReviews = [...reviews].sort((a, b) => {
+    if (sortCriteria === 'latest') {
+      return new Date(b.date) - new Date(a.date); // 최신순 정렬
+    } else if (sortCriteria === 'rating') {
+      return b.overallRating - a.overallRating; // 별점순 정렬
+    }
+    return 0;
+  });
 
   const showMoreReviews = () => {
     setVisibleCount(reviews.length);
@@ -35,7 +46,16 @@ function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
   return (
     <div className="review-list">
       <h2>리뷰</h2>
-      {reviews.slice(0, visibleCount).map((review, index) => (
+      <div className="sort-options">
+        <label>
+          정렬 기준:
+          <select value={sortCriteria} onChange={(e) => setSortCriteria(e.target.value)}>
+            <option value="latest">최신순</option>
+            <option value="rating">별점순</option>
+          </select>
+        </label>
+      </div>
+      {sortedReviews.slice(0, visibleCount).map((review, index) => (
         <div key={index} className="review-item">
           <div className="review-header">
             <div className="review-profile">
@@ -54,35 +74,11 @@ function ReviewList({ reviews, isAdmin, isDeleteMode, onDelete }) {
               </button>
             )}
           </div>
-          <p className="review-date">{review.date}</p>
-          <p className="review-content">{review.content}</p>
-          {review.photos && review.photos.length > 0 && (
-            <div className="review-photos">
-              {review.photos.map((photo, idx) => (
-                <img key={idx} src={photo} alt={`리뷰 사진 ${idx + 1}`} className="review-photo" />
-              ))}
-            </div>
-          )}
           <div className="review-ratings">
-            <div className="rating-group">
-              <p>총 평균:</p>
-              {renderStars(review.overallRating, 'large')}
-            </div>
-            <div className="rating-group small-ratings">
-              <div>
-                <p>서비스:</p>
-                {renderStars(review.serviceRating, 'small')}
-              </div>
-              <div>
-                <p>가격:</p>
-                {renderStars(review.priceRating, 'small')}
-              </div>
-              <div>
-                <p>음식 맛:</p>
-                {renderStars(review.tasteRating, 'small')}
-              </div>
-            </div>
+            {renderStars(review.overallRating, 'large')}
           </div>
+          <p className="review-date">{review.date}</p>
+          {review.content && <p className="review-content">{review.content}</p>}
         </div>
       ))}
       {!isExpanded && visibleCount < reviews.length && (

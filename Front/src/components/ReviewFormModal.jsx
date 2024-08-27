@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReviewForm from './ReviewForm';
 import './ReviewFormModal.css';
 
@@ -13,12 +13,27 @@ function ReviewFormModal({ onSubmit }) {
     setIsModalOpen(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    // Cleanup event listener on unmount
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
   const handleReviewSubmit = (review) => {
-    // 리뷰를 제출했을 때 모달을 닫고 나머지 로직 처리
-    onSubmit(review)
+    onSubmit(review);
     closeModal();
     console.log('Review submitted:', review);
-    // 나중에 백엔드에 리뷰 데이터를 전송하는 로직을 추가
   };
 
   return (
@@ -28,8 +43,8 @@ function ReviewFormModal({ onSubmit }) {
       </button>
 
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closeModal}>
               &times;
             </button>

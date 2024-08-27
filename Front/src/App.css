@@ -16,7 +16,7 @@
 /* 왼쪽 섹션 스타일 */
 .left-section {
   width: 20%; /* 왼쪽 섹션 너비 */
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   padding: 20px;
   border-right: 1px solid #ddd;
 }
@@ -24,12 +24,13 @@
 .middle-section {
   width: 60%; /* 중간 섹션 너비 */
   padding: 20px;
+  background-color: #ffffff;
 }
 
 .right-section {
   width: 20%; /* 오른쪽 섹션 너비 */
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   border-left: 1px solid #ddd;
 }
 

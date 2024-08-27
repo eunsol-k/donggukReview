@@ -1,57 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import './RestaurantDetail.css';
 
-function RestaurantDetail({
-  name,
-  category = [],
-  reviews = [],
-  address,
-  phone,
-  image,
-  menu = [],
-}) {
+function RestaurantDetail({ restaurant }) {
+  const { id, name, category, rating, reviewCount, address, phone, image, menu } = restaurant;
   const [isFavorite, setIsFavorite] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
 
-  // useEffect 훅을 사용해 백엔드에서 데이터를 가져올 때 필요한 설정을 여기에 추가
   useEffect(() => {
-    // 백엔드에서 리뷰 데이터를 가져온 후, 총점을 계산하여 상태로 설정
-    if (reviews.length > 0) {
-      const totalRating = reviews.reduce((acc, review) => acc + review.overallRating, 0);
-      setAverageRating(totalRating / reviews.length);
+    if (reviewCount > 0) {
+      setAverageRating(rating);
     }
-    // 이 예시에서는 reviews를 props로 받았지만,
-    // 실제 구현에서는 API 요청을 통해 백엔드에서 데이터를 가져와야 함
-    // fetchData(); // 백엔드에서 데이터를 가져오는 함수를 여기에 추가
-  }, [reviews]);
+
+    const favoriteRestaurants = JSON.parse(localStorage.getItem('favoriteRestaurants')) || [];
+    setIsFavorite(favoriteRestaurants.includes(id));
+  }, [rating, reviewCount, id]);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+    let favoriteRestaurants = JSON.parse(localStorage.getItem('favoriteRestaurants')) || [];
 
-  const renderStars = () => {
-    const stars = [];
-    const fullStars = Math.floor(averageRating);
-    const hasHalfStar = averageRating - fullStars >= 0.5;
-
-    for (let i = 1; i <= 5; i++) {
-      if (i <= fullStars) {
-        stars.push(<span key={i} className="filled-star">★</span>);
-      } else if (i === fullStars + 1 && hasHalfStar) {
-        stars.push(<span key={i} className="half-filled-star">★</span>);
-      } else {
-        stars.push(<span key={i} className="empty-star">★</span>);
-      }
+    if (isFavorite) {
+      favoriteRestaurants = favoriteRestaurants.filter(favId => favId !== id);
+    } else {
+      favoriteRestaurants.push(id);
     }
 
-    return stars;
+    localStorage.setItem('favoriteRestaurants', JSON.stringify(favoriteRestaurants));
+    setIsFavorite(!isFavorite);
   };
 
   return (
     <div className="restaurant-detail">
       <div className="restaurant-header">
         <h1 className="restaurant-name">{name}</h1>
-        <button className={`favorite-button ${isFavorite ? 'active' : ''}`} onClick={toggleFavorite}>
+        <button
+          className={`favorite-button ${isFavorite ? 'active' : ''}`}
+          onClick={toggleFavorite}
+        >
           ♥
         </button>
       </div>
@@ -61,9 +45,9 @@ function RestaurantDetail({
       <div className="restaurant-info">
         <p className="restaurant-category">{category.join(', ')}</p>
         <div className="restaurant-rating">
-          <div className="rating-stars">{renderStars()}</div>
+          <div className="rating-stars">{/* 별점 표시 로직 */}</div>
           <span className="rating-score">{averageRating.toFixed(1)}</span>
-          <span className="review-count">({reviews.length}명의 평가)</span>
+          <span className="review-count">({reviewCount}명의 평가)</span>
         </div>
         <div className="restaurant-meta">
           <p className="address">{address}</p>

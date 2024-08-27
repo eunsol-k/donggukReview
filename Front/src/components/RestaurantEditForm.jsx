@@ -1,12 +1,42 @@
 import React, { useState } from 'react';
+import './RestaurantEditForm.css';
+
+const CATEGORY_OPTIONS = [
+  '뷔페',
+  '한식',
+  '카페,디저트',
+  '스테이크,립',
+  '일식',
+  '이탈리아음식',
+  '패밀리레스토랑',
+  '술집',
+  '양식',
+  '프랑스음식',
+  '중식',
+  '분식',
+  '육류,고기요리',
+  '태국음식',
+  '아시아음식',
+  '도시락,컵밥',
+  '해물,생선요리',
+  '햄버거',
+  '베트남음식',
+];
 
 function RestaurantEditForm({ restaurant, onSave }) {
-  const [updatedRestaurant, setUpdatedRestaurant] = useState(restaurant || {
-    name: '',
-    phone: '',
-    address: '',
-    category: [],
-    menu: [],
+  const [updatedRestaurant, setUpdatedRestaurant] = useState(() => {
+    // category가 배열로 올 경우 첫 번째 요소를 선택
+    const initialCategory = Array.isArray(restaurant?.category)
+      ? restaurant.category[0]
+      : restaurant?.category || '';
+
+    return {
+      name: restaurant?.name || '',
+      phone: restaurant?.phone || '',
+      address: restaurant?.address || '',
+      category: initialCategory,
+      menu: restaurant?.menu || [],
+    };
   });
 
   const handleChange = (e) => {
@@ -17,7 +47,6 @@ function RestaurantEditForm({ restaurant, onSave }) {
     }));
   };
 
-  // 기존 메뉴 항목을 수정하는 핸들러
   const handleMenuChange = (index, field, value) => {
     const updatedMenu = [...updatedRestaurant.menu];
     updatedMenu[index] = {
@@ -30,7 +59,6 @@ function RestaurantEditForm({ restaurant, onSave }) {
     }));
   };
 
-  // 새로운 메뉴 항목을 추가하는 핸들러
   const handleAddMenu = () => {
     setUpdatedRestaurant((prev) => ({
       ...prev,
@@ -38,7 +66,6 @@ function RestaurantEditForm({ restaurant, onSave }) {
     }));
   };
 
-  // 메뉴 항목을 삭제하는 핸들러
   const handleDeleteMenu = (index) => {
     const updatedMenu = updatedRestaurant.menu.filter((_, i) => i !== index);
     setUpdatedRestaurant((prev) => ({
@@ -48,8 +75,12 @@ function RestaurantEditForm({ restaurant, onSave }) {
   };
 
   const handleSave = () => {
+    if (!updatedRestaurant.name.trim()) {
+      alert('음식점 이름은 필수 항목입니다.');
+      return;
+    }
+
     onSave(updatedRestaurant);
-    // 저장 후 모드 종료 등을 처리하려면 이곳에서 추가적으로 콜백을 호출할 수 있습니다.
   };
 
   return (
@@ -82,20 +113,20 @@ function RestaurantEditForm({ restaurant, onSave }) {
           onChange={handleChange}
         />
       </div>
-      {/* 카테고리나 메뉴를 추가로 수정할 수 있는 입력 필드 */}
       <div>
         <label>카테고리:</label>
-        <input
-          type="text"
+        <select
           name="category"
-          value={updatedRestaurant.category?.join(', ')}
-          onChange={(e) =>
-            setUpdatedRestaurant((prev) => ({
-              ...prev,
-              category: e.target.value.split(',').map((cat) => cat.trim()),
-            }))
-          }
-        />
+          value={updatedRestaurant.category || ''}  // 카테고리를 단일 문자열로 설정
+          onChange={handleChange}
+        >
+          <option value="">카테고리를 선택하세요</option>
+          {CATEGORY_OPTIONS.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label>메뉴:</label>
@@ -109,7 +140,7 @@ function RestaurantEditForm({ restaurant, onSave }) {
               onChange={(e) => handleMenuChange(index, 'name', e.target.value)}
             />
             <input
-              type="text"
+              type="number"
               name={`menu-price-${index}`}
               placeholder="가격"
               value={item.price}
@@ -124,7 +155,7 @@ function RestaurantEditForm({ restaurant, onSave }) {
             </button>
           </div>
         ))}
-        <button onClick={handleAddMenu}>메뉴 추가</button> {/* 메뉴 추가 버튼 */}
+        <button onClick={handleAddMenu}>메뉴 추가</button>
       </div>
       <button onClick={handleSave}>저장</button>
     </div>

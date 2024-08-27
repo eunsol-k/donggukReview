@@ -4,20 +4,15 @@ import ReviewList from '../components/ReviewList';
 import ReviewFormModal from '../components/ReviewFormModal';
 import './Detail.css';
 
-function Detail({ restaurant, reviews, isAdmin, isDeleteMode, onDelete, onSubmitReview }) {
+function Detail({ restaurant, reviews, isAdmin, isDeleteMode, onDelete, onSubmitReview, toggleMode }) {
   return (
     <div className="detail-page">
-      <RestaurantDetail
-        name={restaurant.name}
-        category={restaurant.category}
-        rating={restaurant.rating}
-        reviewCount={restaurant.reviewCount}
-        address={restaurant.address}
-        phone={restaurant.phone}
-        image={restaurant.image}
-        menu={restaurant.menu}
-      />
-      {!isAdmin && <ReviewFormModal onSubmit={onSubmitReview} />}
+      <RestaurantDetail restaurant={restaurant} />
+
+      <div className="mode-header">
+        {!isAdmin && <ReviewFormModal onSubmit={onSubmitReview} />}
+      </div>
+
       <ReviewList
         reviews={reviews}
         isAdmin={isAdmin}

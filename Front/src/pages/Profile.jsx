@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileSection from '../components/ProfileSection';
+import ReviewList from '../components/ReviewList';
 import './Profile.css';
 
 function ProfilePage() {
@@ -17,10 +18,11 @@ function ProfilePage() {
   }, []);
 
   const fetchUserData = async () => {
-    const exampleLikedRestaurants = [
-      { name: 'Restaurant 1', category: ['카페'] },
-      { name: 'Restaurant 2', category: ['한식', '퓨전'] },
-    ];
+    const storedFavorites = JSON.parse(localStorage.getItem('favoriteRestaurants')) || [];
+    const exampleLikedRestaurants = storedFavorites.map(id => ({
+      name: `Restaurant ${id}`,
+      category: ['카페'],
+    }));
 
     const exampleReviews = [
       {
@@ -39,32 +41,40 @@ function ProfilePage() {
     setReviews(exampleReviews);
   };
 
+  const clearFavorites = () => {
+    localStorage.removeItem('favoriteRestaurants');
+    setLikedRestaurants([]); // 좋아요 리스트를 빈 배열로 초기화
+  };
+
   return (
     <div className="profile-page">
       <ProfileSection userInfo={userInfo} />
 
       <div className="profile-section liked-restaurants-section">
         <h3>좋아요 한 음식점</h3>
-        <ul>
-          {likedRestaurants.map((restaurant, index) => (
-            <li key={index}>
-              {restaurant.name} - {restaurant.category.join(', ')}
-            </li>
-          ))}
-        </ul>
+        {likedRestaurants.length > 0 ? (
+          <>
+            <ul>
+              {likedRestaurants.map((restaurant, index) => (
+                <li key={index}>
+                  {restaurant.name} - {restaurant.category.join(', ')}
+                </li>
+              ))}
+            </ul>
+            <button onClick={clearFavorites}>좋아요 리스트 초기화</button>
+          </>
+        ) : (
+          <p>좋아요 한 음식점이 없습니다.</p>
+        )}
       </div>
 
       <div className="profile-section reviews-section">
         <h3>작성한 댓글</h3>
-        <ul>
-          {reviews.map((review, index) => (
-            <li key={index}>
-              <p><strong>{review.restaurant}</strong></p>
-              <p>{review.content}</p>
-              <p>{review.date}</p>
-            </li>
-          ))}
-        </ul>
+        {reviews.length > 0 ? (
+          <ReviewList reviews={reviews} isAdmin={false} isDeleteMode={false} onDelete={() => {}} />
+        ) : (
+          <p>작성한 댓글이 없습니다.</p>
+        )}
       </div>
     </div>
   );

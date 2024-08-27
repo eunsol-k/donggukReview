@@ -3,9 +3,6 @@ import './ReviewForm.css';
 
 function ReviewForm({ onSubmit }) {
   const [overallRating, setOverallRating] = useState(0);
-  const [serviceRating, setServiceRating] = useState(0);
-  const [priceRating, setPriceRating] = useState(0);
-  const [tasteRating, setTasteRating] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
 
   const handleRatingChange = (ratingSetter, value, currentRating) => {
@@ -45,42 +42,26 @@ function ReviewForm({ onSubmit }) {
     });
   };
 
-  const handleImageUpload = (e) => {
-    const uploadedImages = Array.from(e.target.files);
-    setImages([...images, ...uploadedImages]);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 유효성 검사: 총점이 입력되었는지 확인 (리뷰 내용은 필수가 아님)
+    if (!overallRating) {
+      alert('총점을 입력해주세요.');
+      return;
+    }
 
     // 리뷰 데이터를 객체로 생성
     const review = {
       overallRating,
-      serviceRating,
-      priceRating,
-      tasteRating,
-      reviewContent,
+      reviewContent: reviewContent.trim(),  // 리뷰 내용을 트림하여 공백 제거
     };
 
-    // 여기에 백엔드에 데이터를 전송하는 코드 추가
-    // 예: POST 요청을 사용하여 서버로 리뷰 데이터를 전송
-    // fetch('/api/reviews', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(review),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Review submitted:', data);
-    //   // 성공적으로 제출된 후 추가 작업 (예: 폼 리셋)
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+    onSubmit(review);
 
-    onSubmit(review); // 이 부분은 백엔드 연동 시 대체될 수 있음
+    // 폼 초기화
+    setOverallRating(0);
+    setReviewContent('');
   };
 
   return (
@@ -92,27 +73,9 @@ function ReviewForm({ onSubmit }) {
           {renderStars(overallRating, setOverallRating)}
         </div>
       </div>
-      <div className="rating-group">
-        <label>서비스: </label>
-        <div className="star-rating">
-          {renderStars(serviceRating, setServiceRating)}
-        </div>
-      </div>
-      <div className="rating-group">
-        <label>가격: </label>
-        <div className="star-rating">
-          {renderStars(priceRating, setPriceRating)}
-        </div>
-      </div>
-      <div className="rating-group">
-        <label>음식 맛: </label>
-        <div className="star-rating">
-          {renderStars(tasteRating, setTasteRating)}
-        </div>
-      </div>
       <div className="review-content">
         <textarea
-          placeholder="리뷰를 적어주세요"  // 플레이스홀더 추가
+          placeholder="리뷰를 적어주세요 (선택 사항)"
           value={reviewContent}
           onChange={(e) => setReviewContent(e.target.value)}
         />

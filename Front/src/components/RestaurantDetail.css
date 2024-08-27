@@ -1,15 +1,46 @@
 .restaurant-detail {
+  background-color: #ffffff;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.restaurant-images {
+.restaurant-header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.restaurant-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.favorite-button.active {
+  color: #ff4b4b;
+}
+
+.favorite-button:hover {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.restaurant-images {
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -17,31 +48,27 @@
   width: 100%;
   max-height: 300px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 16px;
 }
 
 .restaurant-info {
+  width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.restaurant-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .restaurant-category {
   font-size: 16px;
-  color: #666;
+  color: #777;
   margin-bottom: 10px;
 }
 
 .restaurant-rating {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .rating-stars {
@@ -80,17 +107,18 @@
 .rating-score {
   font-size: 18px;
   font-weight: bold;
+  color: #333;
   margin-right: 10px;
 }
 
 .review-count {
   font-size: 14px;
   color: #666;
-  margin-right: 10px;
 }
 
 .restaurant-meta {
-  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .address,
@@ -101,12 +129,13 @@
 }
 
 .restaurant-menu {
-  margin-top: 20px;
+  width: 100%;
 }
 
 .restaurant-menu h2 {
   font-size: 20px;
   margin-bottom: 10px;
+  color: #333;
 }
 
 .restaurant-menu ul {
@@ -123,40 +152,17 @@
 
 .menu-item-name {
   font-weight: bold;
-}
-
-.menu-item-price {
   color: #555;
 }
 
-.restaurant-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.favorite-button {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #ccc;
-  transition: color 0.3s ease;
-}
-
-.favorite-button.active {
-  color: #ff4b4b;
-}
-
-.favorite-button:hover {
-  color: #ff6b6b;
-  transform: scale(1.1);
+.menu-item-price {
+  color: #999;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .restaurant-detail {
-    padding: 15px;
+    padding: 20px;
   }
 
   .restaurant-name {
