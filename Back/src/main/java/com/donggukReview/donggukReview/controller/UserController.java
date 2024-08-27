@@ -37,13 +37,13 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserInfo(
             @AuthUser Users userEntity,
-            @PathVariable(value = "id") String userId
+            @PathVariable(value = "id") Long userId
     ) {
-        if (!userService.existsByUserId(userId)) {
+        if (!userService.existsById(userEntity.getId())) {
             return ResponseEntity.badRequest().body("존재하지 않는 회원입니다.");
         }
 
-        if (!userEntity.getUserId().equals(userId)) {
+        if (!userEntity.getId().equals(userId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("본인의 마이 페이지만 확인할 수 있습니다.");
         }
@@ -56,20 +56,20 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateUserInfo(
             @AuthUser Users userEntity,
-            @PathVariable(value = "id") String userId,
+            @PathVariable(value = "id") Long userId,
             @RequestPart(value = "data") UserInfoUpdateRequestDTO requestDto,
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
-        if (!userService.existsByUserId(userId)) {
+        if (!userService.existsById(userEntity.getId())) {
             return ResponseEntity.badRequest().body("존재하지 않는 회원입니다.");
         }
 
-        if (!userEntity.getUserId().equals(userId)) {
+        if (!userEntity.getId().equals(userId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("본인의 마이 페이지만 수정할 수 있습니다.");
         }
 
-        if (!encoder.matches(requestDto.getUserPrevNickname(), userEntity.getUserPassword())) {
+        if ((!requestDto.getUserPrevPassword().isBlank() || !requestDto.getUserNextPassword().isBlank()) && !encoder.matches(requestDto.getUserPrevPassword(), userEntity.getUserPassword())) {
             return ResponseEntity.badRequest().body("비밀번호를 다시 확인하세요.");
         }
 
@@ -136,7 +136,7 @@ public class UserController {
     }
 
     // 리뷰 작성
-    @PostMapping("/review/{id}")
+    @PostMapping("/reviews/{id}")
     public ResponseEntity<?> addReview(
             @AuthUser Users users,
             @RequestBody UserReviewRequestDTO requestDto,
@@ -149,9 +149,6 @@ public class UserController {
 
         Review review = new Review();
         review.setReviewContents(requestDto.getReviewContents());
-//        review.setReviewRatingsService(requestDto.getReviewRatingsService());
-//        review.setReviewRatingsPrice(requestDto.getReviewRatingsPrice());
-//        review.setReviewRatingsFlavor(requestDto.getReviewRatingsFlavor());
         review.setReviewRatings(requestDto.getReviewRatings());
         review.setReviewRecommended(requestDto.getReviewRecommended());
         review.setUserId(users.getId());

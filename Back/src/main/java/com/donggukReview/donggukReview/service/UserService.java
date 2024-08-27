@@ -70,11 +70,18 @@ public class UserService {
     public long updateUserInfo(Users users, UserInfoUpdateRequestDTO requestDto, MultipartFile file) {
         try {
             // 유저 상세 정보 수정
-            users.setUserNickname(requestDto.getUserNickname());
-            users.setUserPassword(encoder.encode(requestDto.getUserNextPassword()));
+            if (!requestDto.getUserNickname().isBlank()) {
+                users.setUserNickname(requestDto.getUserNickname());
+            }
+
+            if (!requestDto.getUserPrevPassword().isBlank()) {
+                users.setUserPassword(encoder.encode(requestDto.getUserNextPassword()));
+            }
+
             userRepository.save(users);
 
             long imageId = imageService.addImage(users.getId(), file, true);
+
             if (imageId != -1) {
                 users.setUserImageId(imageId);
                 userRepository.save(users);
@@ -120,5 +127,9 @@ public class UserService {
 
     public boolean existsByUserId(String userId) {
         return userRepository.existsByUserId(userId);
+    };
+
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
     };
 }
