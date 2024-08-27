@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -87,7 +86,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
         });
 
         // 리뷰 목록 가져오기
-        List<Review> reviewList = reviewRepository.findByCafeteriaId(cafeteriaId);
+        List<Review> reviewList = reviewRepository.findByCafeteriaIdOrderByIdDesc(cafeteriaId);
         List<ReviewResponseDTO> reviewResponseDTOList = reviewList.stream()
                 .map(review -> {
                     ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();

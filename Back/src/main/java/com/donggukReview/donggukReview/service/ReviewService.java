@@ -1,6 +1,5 @@
 package com.donggukReview.donggukReview.service;
 
-import com.donggukReview.donggukReview.dto.EntityDTO.ReviewDTO;
 import com.donggukReview.donggukReview.dto.UserReviewListResponseDTO;
 import com.donggukReview.donggukReview.dto.UserReviewResponseDTO;
 import com.donggukReview.donggukReview.entity.Ratings;
@@ -26,7 +25,7 @@ public class ReviewService {
     // 마이 페이지 리뷰 목록 조회
     public UserReviewListResponseDTO getUserReviewList(Users users) {
         UserReviewListResponseDTO responseDTO = new UserReviewListResponseDTO();
-        List<Review> reviewList = reviewRepository.findByUserId(users.getId());
+        List<Review> reviewList = reviewRepository.findByUserIdOrderByIdDesc(users.getId());
 
         List<UserReviewResponseDTO> userReviewResponseDTOList = new ArrayList<>();
         for (Review review : reviewList) {
@@ -34,14 +33,7 @@ public class ReviewService {
 
             userReviewResponseDTO.setReviewId(review.getId());
             userReviewResponseDTO.setReviewContents(review.getReviewContents());
-<<<<<<< HEAD
-//            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
-//            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
-//            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
-            userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatings());
-=======
             userReviewResponseDTO.setReviewRatings(review.getReviewRatings());
->>>>>>> origin/eunsol
             userReviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
             userReviewResponseDTO.setCafeteriaId(review.getCafeteriaId());
 
@@ -58,19 +50,12 @@ public class ReviewService {
 
         if (!ratingsRepository.existsByCafeteriaId(review.getCafeteriaId())) {
             Ratings ratings = new Ratings();
-
-<<<<<<< HEAD
-//            ratings.setRatingsService(review.getReviewRatingsService());
-//            ratings.setRatingsPrice(review.getReviewRatingsPrice());
-//            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
-=======
->>>>>>> origin/eunsol
             ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
             ratingsRepository.save(ratings);
         } else {
-            List<Review> cafeteriaReviewList = reviewRepository.findByCafeteriaId(review.getCafeteriaId());
+            List<Review> cafeteriaReviewList = reviewRepository.findByCafeteriaIdOrderByIdDesc(review.getCafeteriaId());
 
             // TODO 평점 평균 계산 (작성 중)
 
@@ -90,9 +75,9 @@ public class ReviewService {
     }
 
     public List<Review> getAllReviewByUserId(long userId) {
-        return reviewRepository.findByUserId(userId);
+        return reviewRepository.findByUserIdOrderByIdDesc(userId);
     }
     public List<Review> getReviewByCafeteriaId(long cafeteriaId) {
-        return reviewRepository.findByCafeteriaId(cafeteriaId);
+        return reviewRepository.findByCafeteriaIdOrderByIdDesc(cafeteriaId);
     }
 }

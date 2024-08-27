@@ -10,10 +10,5 @@
         <module name="com.donggukReview.donggukReview.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.donggukReview.donggukReview" target="17" />
-      <module name="com.donggukReview.donggukReview.main" target="17" />
-      <module name="com.donggukReview.donggukReview.test" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
