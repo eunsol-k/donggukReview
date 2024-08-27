@@ -10,6 +10,5 @@ import lombok.Setter;
 public class UserReviewRequestDTO {
     private String reviewContents;
     private String reviewRatings;
-    private Integer reviewRecommended;
     private Long cafeteriaId;
 }

@@ -147,14 +147,56 @@ public class UserController {
                     .body("존재하지 않는 음식점입니다.");
         }
 
-        Review review = new Review();
-        review.setReviewContents(requestDto.getReviewContents());
-        review.setReviewRatings(requestDto.getReviewRatings());
-        review.setReviewRecommended(requestDto.getReviewRecommended());
-        review.setUserId(users.getId());
-        review.setCafeteriaId(requestDto.getCafeteriaId());
-
-        reviewService.addReview(review);
-        return ResponseEntity.created(URI.create("/user/reviews")).body("리뷰 작성에 성공하였습니다.");
+        Review savedReview = reviewService.addReview(users, requestDto);
+        UserPostReviewResponseDTO responseDTO = new UserPostReviewResponseDTO(savedReview.getId());
+        return ResponseEntity.created(URI.create("/user/reviews")).body(responseDTO);
     }
+
+    // 리뷰 수정
+    @PatchMapping("/reviews/{id}")
+    public ResponseEntity<?> updateReview(
+            @AuthUser Users users,
+            @RequestBody UserReviewRequestDTO requestDto,
+            @PathVariable(value = "id") Long reviewId
+    ) {
+        if(!reviewService.isExistsReview(reviewId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("존재하지 않는 리뷰입니다.");
+        }
+
+        if(!reviewService.isWrittenByMe(reviewId, users.getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("본인의 리뷰만 수정할 수 있습니다.");
+        }
+
+        long updated = reviewService.updateReview(reviewId, requestDto);
+
+        if (updated == -1) {
+            return ResponseEntity.internalServerError().body("리뷰 수정에 실패했습니다.");
+        }
+        return ResponseEntity.ok("리뷰를 성공적으로 수정하였습니다.");
+    }
+
+    // 리뷰 삭제
+    @DeleteMapping("/reviews/{id}")
+    public ResponseEntity<?> deleteReview(
+            @AuthUser Users users,
+            @PathVariable(value = "id") Long reviewId
+    ) {
+        if(!reviewService.isExistsReview(reviewId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("존재하지 않는 리뷰입니다.");
+        }
+
+        if(!reviewService.isWrittenByMe(reviewId, users.getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("본인의 리뷰만 삭제할 수 있습니다.");
+        }
+
+        reviewService.deleteReview(reviewId);
+
+        return ResponseEntity.ok(reviewId + " 리뷰를 삭제하였습니다.");
+    }
+
+    // 리뷰 추천
 }
