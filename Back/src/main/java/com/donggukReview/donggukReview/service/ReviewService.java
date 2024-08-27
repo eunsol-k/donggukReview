@@ -34,16 +34,20 @@ public class ReviewService {
 
             userReviewResponseDTO.setReviewId(review.getId());
             userReviewResponseDTO.setReviewContents(review.getReviewContents());
+<<<<<<< HEAD
 //            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
 //            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
 //            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
             userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatings());
+=======
+            userReviewResponseDTO.setReviewRatings(review.getReviewRatings());
+>>>>>>> origin/eunsol
             userReviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
             userReviewResponseDTO.setCafeteriaId(review.getCafeteriaId());
 
             userReviewResponseDTOList.add(userReviewResponseDTO);
         }
-        responseDTO.setTotal(userReviewResponseDTOList.size());
+        responseDTO.setCount(userReviewResponseDTOList.size());
         responseDTO.setUserReviewList(userReviewResponseDTOList);
         return responseDTO;
     }
@@ -55,9 +59,12 @@ public class ReviewService {
         if (!ratingsRepository.existsByCafeteriaId(review.getCafeteriaId())) {
             Ratings ratings = new Ratings();
 
+<<<<<<< HEAD
 //            ratings.setRatingsService(review.getReviewRatingsService());
 //            ratings.setRatingsPrice(review.getReviewRatingsPrice());
 //            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
+=======
+>>>>>>> origin/eunsol
             ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
@@ -67,19 +74,12 @@ public class ReviewService {
 
             // TODO 평점 평균 계산 (작성 중)
 
-            double serviceSum = 0.0;
-            double priceSum = 0.0;
-            double flavorSum = 0.0;
-            double totalSum = 0.0;
+            double sum = 0.0;
             for (Review cafeteriaReview : cafeteriaReviewList) {
 
             }
 
             Ratings ratings = ratingsRepository.findByCafeteriaId(review.getCafeteriaId());
-
-//            ratings.setRatingsService(review.getReviewRatingsService());
-//            ratings.setRatingsPrice(review.getReviewRatingsPrice());
-//            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
             ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 

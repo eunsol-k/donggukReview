@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class UserReviewListResponseDTO {
-    int total;
+    int count;
     List<UserReviewResponseDTO> userReviewList;
 }

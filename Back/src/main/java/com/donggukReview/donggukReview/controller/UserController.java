@@ -152,7 +152,7 @@ public class UserController {
 //        review.setReviewRatingsService(requestDto.getReviewRatingsService());
 //        review.setReviewRatingsPrice(requestDto.getReviewRatingsPrice());
 //        review.setReviewRatingsFlavor(requestDto.getReviewRatingsFlavor());
-        review.setReviewRatings(requestDto.getReviewRatingsTotal());
+        review.setReviewRatings(requestDto.getReviewRatings());
         review.setReviewRecommended(requestDto.getReviewRecommended());
         review.setUserId(users.getId());
         review.setCafeteriaId(requestDto.getCafeteriaId());

@@ -14,9 +14,6 @@ public class ReviewDTO {
     private Long userId;
     private Long cafeteriaId;
     private String reviewContents;
-//    private String reviewRatingsService;
-//    private String reviewRatingsPrice;
-//    private String reviewRatingsFlavor;
     private String reviewRatings;
     private Integer reviewRecommended;
 }

@@ -9,10 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserReviewRequestDTO {
     private String reviewContents;
-    private String reviewRatingsService;
-    private String reviewRatingsPrice;
-    private String reviewRatingsFlavor;
-    private String reviewRatingsTotal;
+    private String reviewRatings;
     private Integer reviewRecommended;
     private Long cafeteriaId;
 }
