@@ -5,13 +5,11 @@ import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.mapper.CafeteriaMapper;
 import com.donggukReview.donggukReview.dto.ReviewResponseDTO;
-import com.donggukReview.donggukReview.entity.Cafeteria;
-import com.donggukReview.donggukReview.entity.Image;
-import com.donggukReview.donggukReview.entity.Review;
-import com.donggukReview.donggukReview.entity.Users;
+import com.donggukReview.donggukReview.entity.*;
 import com.donggukReview.donggukReview.exception.ResourceNotFoundException;
 import com.donggukReview.donggukReview.repository.CafeteriaRepository;
 import com.donggukReview.donggukReview.repository.ImageRepository;
+import com.donggukReview.donggukReview.repository.RatingsRepository;
 import com.donggukReview.donggukReview.repository.ReviewRepository;
 import com.donggukReview.donggukReview.service.CafeteriaService;
 import com.donggukReview.donggukReview.service.ImageService;
@@ -37,6 +35,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
     private final ImageRepository imageRepository;
     private final ReviewRepository reviewRepository;
     private final LikeService likeService;
+    private final RatingsRepository ratingsRepository;
 
     @Override
     public CafeteriaDTO createCafeteria(CafeteriaDTO cafeteriaDTO, MultipartFile file) {
@@ -93,15 +92,17 @@ public class CafeteriaServiceImpl implements CafeteriaService {
                 .map(review -> {
                     ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
                     reviewResponseDTO.setReviewContents(review.getReviewContents());
-                    reviewResponseDTO.setReviewRatingsTotal(review.getReviewRatingsTotal());
+                    reviewResponseDTO.setReviewRatings(review.getReviewRatings());
                     reviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
                     return reviewResponseDTO;
                 }).toList();
 
+        Ratings ratings = ratingsRepository.findByCafeteriaId(cafeteriaId);
         // CafeteriaDetailResponseDTO 생성 및 설정
         CafeteriaDetailResponseDTO cafeteriaDetailResponseDTO = new CafeteriaDetailResponseDTO();
+        cafeteriaDetailResponseDTO.setCafeteriaRating(ratings.getRatings());
         cafeteriaDetailResponseDTO.setLike(likeService.isExistsLike(users, cafeteriaId));
-        cafeteriaDetailResponseDTO.setCafeteriaResponseDTOList(List.of(cafeteriaResponseDTO));
+        cafeteriaDetailResponseDTO.setCafeteriaResponseDTO(cafeteriaResponseDTO);
         cafeteriaDetailResponseDTO.setReviewResponseDTOList(reviewResponseDTOList);
 
         return cafeteriaDetailResponseDTO;

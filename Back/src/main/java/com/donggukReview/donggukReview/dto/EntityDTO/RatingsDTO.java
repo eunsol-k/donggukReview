@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class RatingsDTO {
     private Long id;
     private Long cafeteriaId;
-    private String ratingsTotal;
+    private String ratings;
 }

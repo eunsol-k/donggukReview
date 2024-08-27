@@ -20,8 +20,8 @@ public class Ratings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ratings_total")
-    private String ratingsTotal;
+    @Column(name = "ratings")
+    private String ratings;
 
     @Column(name = "cafeteria_id")
     private Long cafeteriaId;

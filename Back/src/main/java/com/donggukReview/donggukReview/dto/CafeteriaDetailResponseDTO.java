@@ -9,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CafeteriaDetailResponseDTO {
     Boolean like;
-    List<CafeteriaResponseDTO> cafeteriaResponseDTOList;
+    CafeteriaResponseDTO cafeteriaResponseDTO;
     List<ReviewResponseDTO> reviewResponseDTOList;
+    String cafeteriaRating;
 }

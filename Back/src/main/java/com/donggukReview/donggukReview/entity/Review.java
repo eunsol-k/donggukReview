@@ -30,8 +30,8 @@ public class Review {
 //    @Column(name = "review_ratings_flavor")
 //    private String reviewRatingsFlavor;
 
-    @Column(name = "review_ratings_total")
-    private String reviewRatingsTotal;
+    @Column(name = "review_ratings")
+    private String reviewRatings;
 
     @Column(name = "review_recommended")
     private Integer reviewRecommended;

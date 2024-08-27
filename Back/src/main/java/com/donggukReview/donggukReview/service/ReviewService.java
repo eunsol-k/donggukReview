@@ -37,7 +37,7 @@ public class ReviewService {
 //            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
 //            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
 //            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
-            userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatingsTotal());
+            userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatings());
             userReviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
             userReviewResponseDTO.setCafeteriaId(review.getCafeteriaId());
 
@@ -58,7 +58,7 @@ public class ReviewService {
 //            ratings.setRatingsService(review.getReviewRatingsService());
 //            ratings.setRatingsPrice(review.getReviewRatingsPrice());
 //            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
-            ratings.setRatingsTotal(review.getReviewRatingsTotal());
+            ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
             ratingsRepository.save(ratings);
@@ -80,7 +80,7 @@ public class ReviewService {
 //            ratings.setRatingsService(review.getReviewRatingsService());
 //            ratings.setRatingsPrice(review.getReviewRatingsPrice());
 //            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
-            ratings.setRatingsTotal(review.getReviewRatingsTotal());
+            ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
             ratingsRepository.save(ratings);
