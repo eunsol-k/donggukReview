@@ -96,6 +96,13 @@ public class ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+    // 리뷰 추천
+    public void recommendReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).get();
+        review.setReviewRecommended(review.getReviewRecommended() + 1);
+        reviewRepository.save(review);
+    }
+
     // 음식점 평점 계산
     private void updateCafeteriaRating(Review review) {
         List<Review> cafeteriaReviewList = reviewRepository.findByCafeteriaIdOrderByIdDesc(review.getCafeteriaId());

@@ -194,9 +194,26 @@ public class UserController {
         }
 
         reviewService.deleteReview(reviewId);
-
         return ResponseEntity.ok(reviewId + " 리뷰를 삭제하였습니다.");
     }
 
     // 리뷰 추천
+    @PostMapping("/reviews/{id}/recommend")
+    public ResponseEntity<?> recommendReview(
+            @AuthUser Users users,
+            @PathVariable(value = "id") Long reviewId
+    ) {
+        if(!reviewService.isExistsReview(reviewId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("존재하지 않는 리뷰입니다.");
+        }
+
+        if(reviewService.isWrittenByMe(reviewId, users.getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("본인의 리뷰는 추천할 수 없습니다.");
+        }
+
+        reviewService.recommendReview(reviewId);
+        return ResponseEntity.ok(reviewId + " 리뷰에 추천했습니다.");
+    }
 }
