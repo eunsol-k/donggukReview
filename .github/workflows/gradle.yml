@@ -42,8 +42,8 @@ jobs:
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: eunsol0808/donggukreview
-        tags: be-0.1
+        image: ${{ secrets.DOCKER_USERNAME }}/donggukreview
+        tags: be-${{ secrets.REGISTER_VERSION }}
         registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -57,4 +57,4 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         script: |
           docker rm -f myboot-svc
-          docker run --name myboot-svc -d -p 8080:8080 --net msanet --net-alias=myboot-svc ${{ secrets.DOCKER_USERNAME }}/springbootvuejs:v${{ env.RELEASE_VERSION
+          docker run --name myboot-svc -d -p 8080:8080 --net msanet --net-alias=myboot-svc ${{ secrets.DOCKER_USERNAME }}/donggukreview:be-${{ secrets.REGISTER_VERSION }}
