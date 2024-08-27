@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -31,7 +30,7 @@ public class CafeteriaController {
     private RatingsService ratingsService;
     private ReviewService reviewService;
     @PostMapping("/cafeteria")
-    public ResponseEntity<CafeteriaDTO> createCafeteria(@RequestBody CafeteriaDTO cafeteriaDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
+    public ResponseEntity<CafeteriaDTO> createCafeteria(@RequestPart(value = "data") CafeteriaDTO cafeteriaDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
         CafeteriaDTO cafeteria = cafeteriaService.createCafeteria(cafeteriaDTO, file);
         return new ResponseEntity<>(cafeteria, HttpStatus.CREATED);
     }
