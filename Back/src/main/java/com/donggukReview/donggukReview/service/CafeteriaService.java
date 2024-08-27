@@ -3,8 +3,8 @@ package com.donggukReview.donggukReview.service;
 import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
+import com.donggukReview.donggukReview.dto.CategoryResponseDTO;
 import com.donggukReview.donggukReview.entity.Users;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,4 +23,6 @@ public interface CafeteriaService {
     boolean isExistsCafeteria(Long cafeteriaId);
 
     CafeteriaResponseDTO getCafeteriaById(Long cafeteriaId);
+
+    CategoryResponseDTO getCategoryList();
 }

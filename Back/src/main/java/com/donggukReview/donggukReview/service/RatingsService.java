@@ -12,6 +12,9 @@ public class RatingsService {
     private final RatingsRepository ratingsRepository;
     public RatingsDTO getRatingsById(Long cafeteriaId) {
         Ratings ratings = ratingsRepository.findByCafeteriaId(cafeteriaId);
+        if (ratings == null) {
+            return null;
+        }
 
         RatingsDTO ratingsDTO = new RatingsDTO();
         ratingsDTO.setId(ratings.getId());

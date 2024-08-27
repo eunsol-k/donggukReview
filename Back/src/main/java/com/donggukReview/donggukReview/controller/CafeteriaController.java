@@ -3,11 +3,10 @@ package com.donggukReview.donggukReview.controller;
 import com.donggukReview.donggukReview.common.AuthUser;
 import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
+import com.donggukReview.donggukReview.dto.CategoryResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
-import com.donggukReview.donggukReview.dto.EntityDTO.ImageDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.RatingsDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.ReviewDTO;
-import com.donggukReview.donggukReview.entity.Ratings;
 import com.donggukReview.donggukReview.entity.Review;
 import com.donggukReview.donggukReview.entity.Users;
 import com.donggukReview.donggukReview.service.CafeteriaService;
@@ -79,19 +78,32 @@ public class CafeteriaController {
     }
 
     @GetMapping("/cafeteria/reviews/{id}")
-    public ResponseEntity<List<ReviewDTO>> getReviewById(@PathVariable("id") Long cafeteriaId) {
+    public ResponseEntity<?> getReviewById(@PathVariable("id") Long cafeteriaId) {
         List<Review> reviews = reviewService.getReviewByCafeteriaId(cafeteriaId);
-        List<ReviewDTO> reviewDTOList = new ArrayList<>();
-        for(Review review : reviews) {
-            ReviewDTO reviewDTO = new ReviewDTO();
-            reviewDTO.setId(review.getId());
-            reviewDTO.setCafeteriaId(review.getCafeteriaId());
-            reviewDTO.setReviewRecommended(review.getReviewRecommended());
-            reviewDTO.setReviewContents(review.getReviewContents());
-            reviewDTO.setCafeteriaId(review.getCafeteriaId());
-
-            reviewDTOList.add(reviewDTO);
+        if (reviews == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review가 없습니다.");
         }
-        return  ResponseEntity.ok(reviewDTOList);
+        else {
+            List<ReviewDTO> reviewDTOList = new ArrayList<>();
+            for (Review review : reviews) {
+                ReviewDTO reviewDTO = new ReviewDTO();
+                reviewDTO.setId(review.getId());
+                reviewDTO.setUserId(review.getUserId());
+                reviewDTO.setCafeteriaId(review.getCafeteriaId());
+                reviewDTO.setReviewRecommended(review.getReviewRecommended());
+                reviewDTO.setReviewContents(review.getReviewContents());
+                reviewDTO.setReviewRatings(review.getReviewRatings());
+                reviewDTO.setCafeteriaId(review.getCafeteriaId());
+
+                reviewDTOList.add(reviewDTO);
+            }
+            return ResponseEntity.ok(reviewDTOList);
+        }
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<?> getCategoryList() {
+        CategoryResponseDTO category = cafeteriaService.getCategoryList();
+        return ResponseEntity.ok(category);
     }
 }
