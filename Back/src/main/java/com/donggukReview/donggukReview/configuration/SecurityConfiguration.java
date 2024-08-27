@@ -29,7 +29,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/",
 						"/login", "/register",
 						"/swagger/**", "/swagger-ui/**", "/docs/**",
-						"/categories", "/cafeteria/**")
+						"/category", "/cafeteria/**")
 						.permitAll()
 
 						.requestMatchers("/cafeteria")

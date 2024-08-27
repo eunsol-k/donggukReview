@@ -36,7 +36,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String uri = request.getRequestURI();
 		if (uri.equals("/") ||
 			uri.equals("/register") || uri.equals("/login") ||
-			uri.equals("/categories") ||
+			uri.equals("/category") ||
 			uri.startsWith("/swagger") || uri.startsWith("/docs") ||
 			uri.startsWith("/cafeteria")) {
 			filterChain.doFilter(request, response);
