@@ -34,14 +34,7 @@ public class ReviewService {
 
             userReviewResponseDTO.setReviewId(review.getId());
             userReviewResponseDTO.setReviewContents(review.getReviewContents());
-<<<<<<< HEAD
-//            userReviewResponseDTO.setReviewRatingsService(review.getReviewRatingsService());
-//            userReviewResponseDTO.setReviewRatingsPrice(review.getReviewRatingsPrice());
-//            userReviewResponseDTO.setReviewRatingsFlavor(review.getReviewRatingsFlavor());
-            userReviewResponseDTO.setReviewRatingsTotal(review.getReviewRatings());
-=======
             userReviewResponseDTO.setReviewRatings(review.getReviewRatings());
->>>>>>> origin/eunsol
             userReviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
             userReviewResponseDTO.setCafeteriaId(review.getCafeteriaId());
 
@@ -58,13 +51,6 @@ public class ReviewService {
 
         if (!ratingsRepository.existsByCafeteriaId(review.getCafeteriaId())) {
             Ratings ratings = new Ratings();
-
-<<<<<<< HEAD
-//            ratings.setRatingsService(review.getReviewRatingsService());
-//            ratings.setRatingsPrice(review.getReviewRatingsPrice());
-//            ratings.setRatingsFlavor(review.getReviewRatingsFlavor());
-=======
->>>>>>> origin/eunsol
             ratings.setRatings(review.getReviewRatings());
             ratings.setCafeteriaId(review.getCafeteriaId());
 
@@ -93,6 +79,10 @@ public class ReviewService {
         return reviewRepository.findByUserId(userId);
     }
     public List<Review> getReviewByCafeteriaId(long cafeteriaId) {
-        return reviewRepository.findByCafeteriaId(cafeteriaId);
+         List<Review> reviews = reviewRepository.findByCafeteriaId(cafeteriaId);
+         if(reviews.isEmpty()) {
+             return  null;
+         }
+         else return reviews;
     }
 }

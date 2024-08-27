@@ -3,17 +3,14 @@ package com.donggukReview.donggukReview.service.impl;
 import com.donggukReview.donggukReview.dto.CafeteriaDetailResponseDTO;
 import com.donggukReview.donggukReview.dto.CafeteriaResponseDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.CafeteriaDTO;
+import com.donggukReview.donggukReview.dto.CategoryResponseDTO;
+import com.donggukReview.donggukReview.dto.EntityDTO.RatingsDTO;
 import com.donggukReview.donggukReview.dto.EntityDTO.mapper.CafeteriaMapper;
 import com.donggukReview.donggukReview.dto.ReviewResponseDTO;
 import com.donggukReview.donggukReview.entity.*;
 import com.donggukReview.donggukReview.exception.ResourceNotFoundException;
-import com.donggukReview.donggukReview.repository.CafeteriaRepository;
-import com.donggukReview.donggukReview.repository.ImageRepository;
-import com.donggukReview.donggukReview.repository.RatingsRepository;
-import com.donggukReview.donggukReview.repository.ReviewRepository;
-import com.donggukReview.donggukReview.service.CafeteriaService;
-import com.donggukReview.donggukReview.service.ImageService;
-import com.donggukReview.donggukReview.service.LikeService;
+import com.donggukReview.donggukReview.repository.*;
+import com.donggukReview.donggukReview.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,9 +30,10 @@ public class CafeteriaServiceImpl implements CafeteriaService {
     private final CafeteriaRepository cafeteriaRepository;
     private final ImageService imageService;
     private final ImageRepository imageRepository;
-    private final ReviewRepository reviewRepository;
     private final LikeService likeService;
-    private final RatingsRepository ratingsRepository;
+    private final RatingsService ratingsService;
+    private final ReviewService reviewService;
+    private final MenuRepository menuRepository;
 
     @Override
     public CafeteriaDTO createCafeteria(CafeteriaDTO cafeteriaDTO, MultipartFile file) {
@@ -82,28 +80,38 @@ public class CafeteriaServiceImpl implements CafeteriaService {
         cafeteriaResponseDTO.setCafeteriaAddress(cafeteria.getCafeteriaAddress());
 
         // Optional을 통해 이미지 정보가 존재할 경우 설정
-        imageOptional.ifPresent(image -> {
-            cafeteriaResponseDTO.setStoredFilePath(image.getStoredFilePath());
-        });
+        imageOptional.ifPresent(image -> cafeteriaResponseDTO.setStoredFilePath(image.getStoredFilePath()));
 
-        // 리뷰 목록 가져오기
-        List<Review> reviewList = reviewRepository.findByCafeteriaId(cafeteriaId);
-        List<ReviewResponseDTO> reviewResponseDTOList = reviewList.stream()
-                .map(review -> {
-                    ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
-                    reviewResponseDTO.setReviewContents(review.getReviewContents());
-                    reviewResponseDTO.setReviewRatings(review.getReviewRatings());
-                    reviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
-                    return reviewResponseDTO;
-                }).toList();
-
-        Ratings ratings = ratingsRepository.findByCafeteriaId(cafeteriaId);
         // CafeteriaDetailResponseDTO 생성 및 설정
         CafeteriaDetailResponseDTO cafeteriaDetailResponseDTO = new CafeteriaDetailResponseDTO();
-        cafeteriaDetailResponseDTO.setCafeteriaRating(ratings.getRatings());
-        cafeteriaDetailResponseDTO.setLike(likeService.isExistsLike(users, cafeteriaId));
+
+        // 리뷰 목록 가져오기 (리뷰가 없을 경우 빈 리스트 반환)
+        List<Review> reviews = reviewService.getReviewByCafeteriaId(cafeteriaId);
+        if (reviews == null) {
+            // 리뷰 리스트가 비어있을 경우 null 설정
+            cafeteriaDetailResponseDTO.setReviewResponseDTOList(null);
+        } else {
+            List<ReviewResponseDTO> reviewResponseDTOList = reviews.stream()
+                    .map(review -> {
+                        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
+                        reviewResponseDTO.setReviewContents(review.getReviewContents());
+                        reviewResponseDTO.setReviewRatings(review.getReviewRatings());
+                        reviewResponseDTO.setReviewRecommended(review.getReviewRecommended());
+                        return reviewResponseDTO;
+                    }).toList();
+            cafeteriaDetailResponseDTO.setReviewResponseDTOList(reviewResponseDTOList);
+        }
+
+        // 평점 가져오기 (평점이 없을 경우 null로 설정)
+        RatingsDTO ratings = ratingsService.getRatingsById(cafeteriaId);
+
+        // ratings가 null인 경우 null을 설정, 아니면 ratings 값 사용
+        cafeteriaDetailResponseDTO.setCafeteriaRating(ratings != null ? ratings.getRatings() : null);
+
+        // users가 null이 아닌 경우에만 likeService 호출
+        cafeteriaDetailResponseDTO.setLike(users != null && likeService.isExistsLike(users, cafeteriaId));
+
         cafeteriaDetailResponseDTO.setCafeteriaResponseDTO(cafeteriaResponseDTO);
-        cafeteriaDetailResponseDTO.setReviewResponseDTOList(reviewResponseDTOList);
 
         return cafeteriaDetailResponseDTO;
     }
@@ -207,7 +215,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
 
     @Override
     public List<CafeteriaResponseDTO> getCafeteriasByNameAndCategory(String name, String category) {
-        List<Cafeteria> cafeterias =  cafeteriaRepository.findByCafeteriaNameContainingIgnoreCaseAndCafeteriaCategoryContainingIgnoreCase(name, category);
+        List<Cafeteria> cafeterias = cafeteriaRepository.findByCafeteriaNameContainingIgnoreCaseAndCafeteriaCategoryContainingIgnoreCase(name, category);
 
         List<CafeteriaResponseDTO> cafeteriaResponseDTOList = new ArrayList<>();
 
@@ -253,7 +261,7 @@ public class CafeteriaServiceImpl implements CafeteriaService {
         }
 
         // 이미지 파일이 전달된 경우
-        if(file != null) {
+        if (file != null) {
             // 기존 이미지 업데이트 또는 새 이미지 추가
             long imageId = imageService.addImage(cafeteria.getId(), file, false);
             if (imageId != -1) {
@@ -269,9 +277,14 @@ public class CafeteriaServiceImpl implements CafeteriaService {
 
     @Override
     public void deleteCafeteria(Long cafeteriaId) {
-        String errMsg = String.format("Data is not exists %s", cafeteriaId);
+        String errMsg = String.format("Data does not exist for ID %s", cafeteriaId);
         Cafeteria cafeteria = cafeteriaRepository.findById(cafeteriaId)
                 .orElseThrow(() -> new ResourceNotFoundException(errMsg, HttpStatus.NOT_FOUND));
+
+        // 관련된 메뉴 데이터를 먼저 삭제
+        menuRepository.deleteByCafeteriaId(cafeteriaId);
+
+        // 그런 다음 식당 데이터를 삭제
         cafeteriaRepository.delete(cafeteria);
     }
 
@@ -307,5 +320,23 @@ public class CafeteriaServiceImpl implements CafeteriaService {
         });
 
         return cafeteriaResponseDTO;
+    }
+
+    @Override
+    public CategoryResponseDTO getCategoryList() {
+        // 모든 Cafeteria 엔터티를 가져옴
+        List<Cafeteria> cafeteriaList = cafeteriaRepository.findAll();
+
+        // 중복을 제거한 카테고리 리스트 생성
+        List<String> categoryList = cafeteriaList.stream()
+                .map(Cafeteria::getCafeteriaCategory) // Cafeteria 엔터티에서 카테고리 필드만 추출
+                .distinct() // 중복된 카테고리를 제거
+                .collect(Collectors.toList()); // 결과를 리스트로 수집
+
+        // CategoryResponseDTO에 카테고리 리스트를 설정
+        CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+        categoryResponseDTO.setCategory(categoryList); // 카테고리 리스트를 설정
+
+        return categoryResponseDTO;
     }
 }
